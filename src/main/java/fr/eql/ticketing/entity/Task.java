@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Task {
 	@Id
@@ -34,51 +39,11 @@ public class Task {
 		this.ticket = ticket;
 		this.userAddedDate = userAddedDate;
 	}
-	
+
 	public Task(LocalDateTime userAddedDate, User user) {
 		super();
 		this.userAddedDate = userAddedDate;
 		this.user = user;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getUserAddedDate() {
-		return userAddedDate;
-	}
-
-	public void setUserAddedDate(LocalDateTime userAddedDate) {
-		this.userAddedDate = userAddedDate;
-	}
-
-	public LocalDateTime getUserWithdrawalDate() {
-		return userWithdrawalDate;
-	}
-
-	public void setUserWithdrawalDate(LocalDateTime userWithdrawalDate) {
-		this.userWithdrawalDate = userWithdrawalDate;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Ticket getTicket() {
-		return ticket;
-	}
-
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
 	}
 
 	@Override

@@ -14,6 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "UsersGroup")
 public class Group {
@@ -41,54 +46,6 @@ public class Group {
 		this.name = name;
 		this.createdBy = createdBy;
 		this.creationDateGroup = creationDateGroup;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public User getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public LocalDateTime getCreationDateGroup() {
-		return creationDateGroup;
-	}
-
-	public void setCreationDateGroup(LocalDateTime creationDateGroup) {
-		this.creationDateGroup = creationDateGroup;
-	}
-
-	public Set<Membership> getMemberships() {
-		return memberships;
-	}
-
-	public void setMemberships(Set<Membership> memberships) {
-		this.memberships = memberships;
-	}
-
-	public Set<Ticket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(Set<Ticket> tickets) {
-		this.tickets = tickets;
 	}
 
 	@Override

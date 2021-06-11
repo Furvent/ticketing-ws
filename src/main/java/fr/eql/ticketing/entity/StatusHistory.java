@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class StatusHistory {
 	@Id
@@ -36,38 +41,6 @@ public class StatusHistory {
 
 	public StatusHistory(LocalDateTime statusDate, Status status) {
 		this.statusDate = statusDate;
-		this.status = status;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getStatusDate() {
-		return statusDate;
-	}
-
-	public void setStatusDate(LocalDateTime statusDate) {
-		this.statusDate = statusDate;
-	}
-
-	public Ticket getTicket() {
-		return ticket;
-	}
-
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -104,8 +77,8 @@ public class StatusHistory {
 
 	@Override
 	public String toString() {
-		return "StatusHistory [id=" + id + ", statusDate=" + statusDate + ", ticket=" + ticket + ", status="
-				+ status + "]";
+		return "StatusHistory [id=" + id + ", statusDate=" + statusDate + ", ticket=" + ticket + ", status=" + status
+				+ "]";
 	}
 
 }

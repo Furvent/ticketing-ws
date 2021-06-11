@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "UserApp")
 public class User {
@@ -37,70 +42,6 @@ public class User {
 		this.password = password;
 		this.pseudo = pseudo;
 		this.creationAccountDate = creationAccountDate;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPseudo() {
-		return pseudo;
-	}
-
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
-
-	public LocalDateTime getCreationAccountDate() {
-		return creationAccountDate;
-	}
-
-	public void setCreationAccountDate(LocalDateTime creationAccountDate) {
-		this.creationAccountDate = creationAccountDate;
-	}
-
-	public Set<Membership> getMemberships() {
-		return memberships;
-	}
-
-	public void setMemberships(Set<Membership> memberships) {
-		this.memberships = memberships;
-	}
-
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	public Set<Comment> getComment() {
-		return comment;
-	}
-
-	public void setComment(Set<Comment> comment) {
-		this.comment = comment;
 	}
 
 	@Override

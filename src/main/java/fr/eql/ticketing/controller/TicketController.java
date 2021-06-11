@@ -2,7 +2,6 @@ package fr.eql.ticketing.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,13 +15,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketing.controller.form.TicketForm;
-import fr.eql.ticketing.entity.Group;
-import fr.eql.ticketing.entity.Membership;
 import fr.eql.ticketing.entity.Status;
 import fr.eql.ticketing.entity.StatusHistory;
 import fr.eql.ticketing.entity.Task;
 import fr.eql.ticketing.entity.Ticket;
-import fr.eql.ticketing.entity.User;
 import fr.eql.ticketing.service.GroupService;
 import fr.eql.ticketing.service.MembershipService;
 import fr.eql.ticketing.service.StatusHistoryService;

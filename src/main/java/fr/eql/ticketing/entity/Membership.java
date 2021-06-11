@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Membership {
 	@Id
@@ -32,46 +37,6 @@ public class Membership {
 		this.user = user;
 		this.group = group;
 		this.joinDate = joinDate;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getJoinDate() {
-		return joinDate;
-	}
-
-	public void setJoinDate(LocalDateTime joinDate) {
-		this.joinDate = joinDate;
-	}
-
-	public LocalDateTime getWithDrawalDate() {
-		return withDrawalDate;
-	}
-
-	public void setWithDrawalDate(LocalDateTime withDrawalDate) {
-		this.withDrawalDate = withDrawalDate;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
 	}
 
 	@Override

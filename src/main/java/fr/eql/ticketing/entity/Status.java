@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "StatusTicket")
 public class Status {
@@ -20,14 +25,6 @@ public class Status {
 
 	@OneToMany(mappedBy = "status")
 	private Set<StatusHistory> statusHistory = new HashSet<StatusHistory>();
-	
-	
-	//ajouter pour le test a supprimer
-	public Status(Long id, String label) {
-		super();
-		this.id = id;
-		this.label = label;
-	}
 
 	public Status() {
 	}
@@ -36,28 +33,9 @@ public class Status {
 		this.label = label;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
+	public Status(Long id, String label) {
 		this.id = id;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Set<StatusHistory> getStatusHistory() {
-		return statusHistory;
-	}
-
-	public void setStatusHistory(Set<StatusHistory> statusHistory) {
-		this.statusHistory = statusHistory;
 	}
 
 	@Override

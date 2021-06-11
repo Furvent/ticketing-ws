@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.eql.ticketing.entity.Group;
 import fr.eql.ticketing.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {

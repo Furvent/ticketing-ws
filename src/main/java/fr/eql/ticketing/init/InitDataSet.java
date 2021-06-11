@@ -1,8 +1,6 @@
 package fr.eql.ticketing.init;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 

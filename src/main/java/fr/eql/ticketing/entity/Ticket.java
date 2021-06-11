@@ -12,6 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Ticket {
 	@Id
@@ -19,8 +24,8 @@ public class Ticket {
 	private Long id;
 
 	private String title;
-	
-	@Column(length = 3000) 
+
+	@Column(length = 3000)
 	private String details;
 
 	@OneToMany(mappedBy = "ticket")
@@ -46,62 +51,6 @@ public class Ticket {
 
 	public Ticket(String details, String title, Group group) {
 		this(details, title);
-		this.group = group;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Set<StatusHistory> getStatusHistory() {
-		return statusHistory;
-	}
-
-	public void setStatusHistory(Set<StatusHistory> statusHistory) {
-		this.statusHistory = statusHistory;
-	}
-
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	public Set<Comment> getComment() {
-		return comment;
-	}
-
-	public void setComment(Set<Comment> comment) {
-		this.comment = comment;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
 		this.group = group;
 	}
 

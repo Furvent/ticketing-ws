@@ -13,6 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Comment {
 
@@ -48,62 +53,6 @@ public class Comment {
 	public Comment(String text, LocalDateTime createDate, Comment parentComment) {
 		this(text, createDate);
 		this.parent = parentComment;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
-
-	public Comment getParent() {
-		return parent;
-	}
-
-	public void setParent(Comment parent) {
-		this.parent = parent;
-	}
-
-	public Set<Comment> getChildren() {
-		return children;
-	}
-
-	public void setChildren(Set<Comment> children) {
-		this.children = children;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Ticket getTicket() {
-		return ticket;
-	}
-
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
 	}
 
 	@Override
