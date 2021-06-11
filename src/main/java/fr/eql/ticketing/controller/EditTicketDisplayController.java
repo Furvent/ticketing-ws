@@ -159,8 +159,6 @@ public class EditTicketDisplayController {
 				statusHistoryService.save(statusHistory);
 			}
 		}
-		List<Long> newUsersAddOnTaskIds = new ArrayList<Long>();
-
 	}
 
 	private List<User> getUsersByGroup(Model model) {

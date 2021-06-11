@@ -13,15 +13,11 @@ public class AddUserForm {
 		this.idUserToAdd = idUserToAdd;
 	}
 
+	public AddUserForm() {
+	}
+
 	public AddUserForm(List<Long> idUserToAdd) {
-		super();
 		this.idUserToAdd = idUserToAdd;
 	}
 
-	public AddUserForm() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
 }
