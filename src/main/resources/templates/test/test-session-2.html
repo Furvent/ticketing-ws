@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>SESSION DEBUG</title>
+</head>
+<body>
+	<h1>SESSION 2 DEBUG</h1>
+	<h2 th:utext="${testString}"></h2>
+	<table>
+		<tr>
+			<th>User login</th>
+			<th>User pwd</th>
+			<th>User pseudo</th>
+		</tr>
+		<tr th:each="user : ${listUsers}">
+			<td th:text="${user.login}"></td>
+			<td th:text="${user.password}"></td>
+			<td th:text="${user.pseudo}"></td>
+		</tr>
+	</table>
+</body>
+</html>

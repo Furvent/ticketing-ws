@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_connectForm">
+	<table>
+		<tr>
+			<td><label>Id du statut :</label></td>
+			<td th:text="${ticketForm.idStatus}" ></td>
+		</tr>
+		<tr>
+			<td><label>Description ticket :</label></td>
+			<td th:text="${ticketForm.description}" ></td>
+		</tr>
+		<tr th:each="u : ${idUsers}">
+			<td><label>Id du user :</label></td>
+			<td  th:text="${u}"></td>
+		</tr>
+		<!--  
+		<tr>
+			<td><label>label du statut :</label></td>
+			<td th:text="${aStatus.label}"></td>
+		</tr>-->
+	</table>
+</body>

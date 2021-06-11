@@ -1,0 +1,4 @@
+Add something
+Vous avez travaillé sur votre branche. -> vous committez
+Vous faites un checkout sur develop. Un pull pour avoir les données des copains !
+Et là vous faites un merge de votre branche vers develop. Puis un push vers le serveur remote (github)

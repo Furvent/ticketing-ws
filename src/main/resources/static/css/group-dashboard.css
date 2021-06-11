@@ -1,0 +1,24 @@
+/* .customClass {
+	background-color: red;
+	color: yellow;
+} */
+
+/* .ticketting-container-all-tickets {
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+} */
+
+.ticketting-container-column-ticket-status {
+	background-color: #d4d4d4;
+	flex: 1 1 0px;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+/* Not use now */	
+.ticketting-title-status {
+}

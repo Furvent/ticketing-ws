@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>General dashboard</title>
+<link rel="stylesheet" th:href="@{/css/general-dashboard.css}"></link>
+</head>
+<body>
+	<div class="ticketting-container-general-dashboard">
+		<header class="d-flex align-items-center m-3">
+			<h5 th:text="'Welcome ' + ${user.pseudo} + ' !'"></h5>
+			<form th:action="@{/deconnexion}" th:object="${user}" method="POST">
+				<button type="submit" class="btn btn-outline-warning ml-5">Sign out</button>
+			</form>
+		</header>
+		<div class="ticketting-line"></div>
+		<!-- Nav -->
+		<nav class="nav nav-tabs m-3">
+			<a class="nav-item nav-link active" href="#groups" data-toggle="tab">Groups</a>
+			<a class="nav-item nav-link" href="#profil" data-toggle="tab">Profile</a>
+		</nav>
+
+		<!-- All tabs content -->
+		<div class="tab-content">
+			<!-- Tab group -->
+			<div class="tab-pane fade show active" id="groups">
+				<div class="d-flex justify-content-between align-items-center">
+					<h2>My Groups</h2>
+					<form class="mr-5" th:action="@{/createGroup}" method="get">
+						<button type="submit" class="btn btn-primary">Create a
+							new group</button>
+					</form>
+				</div>
+
+				<div class="group-container-all-btn"></div>
+				<table class="table mt-2" cellspacing="0">
+					<thead>
+						<tr>
+							<th class="text-center">Group name</th>
+							<th class="text-center">Admin</th>
+							<th class="text-center">Creation Date</th>
+							<th class="text-center"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="group : ${userGroups}">
+							<td class="text-center" th:text="${group.name}"></td>
+							<td class="text-center"><span
+								th:if="${group.createdBy.id == user.id}">Yourself</span> <span
+								th:unless="${group.createdBy.id == user.id}"
+								th:text="${group.createdBy.pseudo}"></span></td>
+							<td class="text-center" th:text="${#temporals.format(group.creationDateGroup, 'dd MMM yyyy')}"></td>
+							<td><a class="btn btn-success"
+								th:href="'group?groupId=' + ${group.id}" role="button">Enter</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Tab profil -->
+			<div class="tab-pane fade" id="profil">
+				<div th:replace="_profil"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

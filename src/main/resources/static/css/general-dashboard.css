@@ -1,0 +1,54 @@
+/* .group-container-all-groups {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.group-container-column-group-list {
+	flex-grow: 3;
+	background-color: #d4d4d4;	
+	margin-left: 1rem;
+	margin-right: 1rem;
+	text-align: center;
+	padding-bottom: 1rem;
+}
+
+.group-container-column-group-stats {
+	flex-grow: 1;
+	background-color: #d4d4d4;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	text-align: center;
+	padding-bottom: 1rem;
+}
+
+.group-container-all-btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	align-items: baseline;
+}
+
+.group-container-new-group {	
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.input-group{
+	float: right;	
+	margin-left: auto;
+	margin-right: auto;
+	padding-top:1rem;
+	width:30%;
+} */
+
+.ticketting-container-general-dashboard {
+	margin: auto;
+	width: 50rem;
+}

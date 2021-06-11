@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticketting: Create your group</title>
+<link rel="stylesheet" th:href="@{/css/create-group.css}"></link>
+</head>
+<body>
+	<div class="card ticketting-create-group-card mt-2"
+		style="width: 25rem;">
+		<div class="card-body">
+			<h5 class="card-title">Group creation</h5>
+			<form th:action="@{/groupeCreated}" th:object="${newGroup}"
+				method="POST">
+				<div class="form-group">
+					<input type="text" class="form-control" name="name"
+						th:field="*{name}" id="name"
+						placeholder="Enter the name of your new group">
+				</div>
+				<div class="d-flex">
+					<button type="submit" class="btn btn-success">Submit</button>
+					<a class="btn btn-warning ml-3" href="/dashboard" role="button">Cancel</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

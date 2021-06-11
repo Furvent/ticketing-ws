@@ -1,0 +1,19 @@
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_profil">
+	<div>
+		<b>You will find here the information relative to your profile</b>
+		<div class="form-group">
+			<label for="login1"> Your username</label> <input type="text"
+				class="form-control" name="login" th:field="${user.login}"
+				id="login1" readonly="readonly">
+		</div>
+		<div class="form-group">
+			<label for="pseudo1">Your pseudo (public identifier)</label> <input type="text"
+				class="form-control" name="pseudo" th:field="${user.pseudo}"
+				id="pseudo" readonly="readonly">
+		</div>
+
+	</div>
+	<form th:action="@{/userProfile}" method="GET">
+		<button type="submit" class="btn btn-primary">Update your profile</button>
+	</form>
+</body>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<title>Ticket's detail</title>
+</head>
+	<div class="card m-2" style="width: 25rem;">
+		<div class="card-body">
+			<h4 class="card-title text-center text-primary"
+				th:text="' - ' + ${ticketTitle} + ' - '"></h4>
+			<div class="ticketting-line"></div>
+			<h5 class="card-title mt-2 text-primary">Details</h5>
+			<p th:text="${ticketDetails}"></p>
+			<h5 class="card-title mt-2 text-primary">Working on</h5>
+			<ul>
+				<li th:each="pseudo : ${usersPseudo}" th:text="${pseudo}"></li>
+			</ul>
+			<h5 class="card-title mt-2 text-primary">History</h5>
+			<ul>
+				<li th:each="statusHistory : ${history}">
+					<p>
+						<span th:text="${#temporals.format(statusHistory.statusDate, 'dd MMM yyyy')}"></span> => <span
+							th:text="${statusHistory.status.label}"></span>
+					</p>
+				</li>
+			</ul>
+			<h5 class="card-title mt-2 text-primary">Comments</h5>
+			<p>Work in progress!</p>
+		</div>
+		<a th:if="groupSelectedByUserId == null" th:href="/dashboard"
+			class="btn btn-primary">Go back</a>
+		<a th:unless="groupSelectedByUserId == null" th:href="'group?groupId='+${groupSelectedByUserId}"
+			class="btn btn-primary">Go back</a>
+	</div>
+</html>

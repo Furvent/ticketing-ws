@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>User profile</title>
+</head>
+<body>
+	<p>You will find here the information relative to your profile</p>
+	<label th:text="${user.login}"></label>
+	<br />
+	<label th:text="${user.password}"></label>
+	<br />
+	<label th:text="${user.pseudo}"></label>
+	<br />
+		<form th:action="@{/profilChangeConfirmation}" th:object="${userModif}"
+			method="POST">
+			<div class="form-group">
+				<label for="pseudo1">Pseudo</label> <input type="text"
+					class="form-control" name="pseudo" th:field="*{pseudo}" id="pseudo"
+					placeholder="Enter your public identifier"> <small
+					id="pseudohelp" class="form-text text-muted">This "pseudo" is your public 
+					identifier</small>
+			</div>
+			<div class="form-group">
+				<label for="password1">password</label> <input type="password"
+					class="form-control" name="password" th:field="*{password}"
+					id="password" placeholder="Enter your password"> <small
+					id="passwordhelp" class="form-text text-muted">Enter your new password</small>
+			</div>
+			<div class="form-group">
+				<label for="password2">password Confirmation</label> <input type="password"
+					class="form-control" name="password1" th:field="*{passwordConfirmation}"
+					id="password" placeholder="Enter your password"> <small
+					id="passwordhelp" class="form-text text-muted">Confirm your new password</small>
+			</div>
+						<div class="form-group">
+				<label for="password3">password Check</label> <input type="password"
+					class="form-control" name="password2" th:field="*{passwordCheck}"
+					id="password" placeholder="Enter your password"> <small
+					id="passwordhelp" class="form-text text-muted">Enter your previous password to
+					validate the changes in your profile</small>
+			</div>
+			
+			 
+			<button type="submit" class="btn btn-primary">Submit</button>
+
+		</form>
+		<p th:text=${userModif.errorMessage}/></p>
+</body>
+</html>

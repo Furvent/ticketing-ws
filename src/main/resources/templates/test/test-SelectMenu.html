@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_connectForm">
+	<form method="post" th:object="${aStatus}" th:action="@{/test/test-SelectMenu2}">
+		<select th:field="*{id}">
+			<option th:each="s : ${status}" th:value="${s.id}" 
+				th:text="${s.label}"></option>
+		</select>
+		<!-- th:value = la valeur qu'on enregistre -->
+		<!-- th:fields = la ou l'enregistre -->
+		<button type="submit" class="btn btn-primary">TEST</button>
+	</form>
+</body>

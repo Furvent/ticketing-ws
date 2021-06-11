@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_signUp">
+	<div>
+		<form th:action="@{/list-users}" th:object="${user}" method="POST"
+			class="d-flex justify-content-center flex-column">
+			<div class="form-group d-flex justify-content-between">
+				<label for="login1" class="pt-1 pr-2">Username</label> <input
+					type="text" class="form-control" name="login" th:field="*{login}"
+					id="login" placeholder="Enter your login" style="width: 22rem;">
+			</div>
+			<div class="form-group d-flex justify-content-between">
+				<label for="password1" class="pt-1 pr-2">Password</label> <input
+					type="password" class="form-control" name="password"
+					th:field="*{password}" id="password"
+					placeholder="Enter your password" style="width: 22rem;">
+			</div>
+			<div class="form-group d-flex justify-content-between">
+				<label for="pseudo1" class="pt-1 pr-2">Pseudo</label> <input
+					type="text" class="form-control" name="pseudo" th:field="*{pseudo}"
+					id="pseudo" placeholder="Enter your pseudo - editable later"
+					style="width: 22rem;">
+			</div>
+			<button type="submit" class="btn btn-primary mx-auto"
+				style="width: 16.5rem;">Submit</button>
+		</form>
+	</div>
+</body>

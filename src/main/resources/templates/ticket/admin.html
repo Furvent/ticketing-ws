@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>Modify the ticket</title>
+</head>
+<div class="card m-2" style="width: 30rem;">
+	<div class="card-body">
+		<h4 class="card-title text-center text-primary"
+			th:text="' - ' + ${ticket.title} + ' - '"></h4>
+		<div class="ticketting-line"></div>
+		<h5 class="card-title mt-2 text-primary">Task's details</h5>
+		<p th:text="${ticket.details}"></p>
+		<h5 class="card-title mt-2 text-primary">Working on</h5>
+		<ul>
+			<li th:each="pseudo : ${usersPseudo}" th:text="${pseudo}"></li>
+		</ul>
+		<h5 class="card-title mt-2 text-primary">History</h5>
+		<ul>
+			<li th:each="statusHistory : ${historic}">
+				<p>
+					<span
+						th:text="${#temporals.format(statusHistory.statusDate, 'dd MMM yyyy')}">
+					</span>
+					=> <span th:text="${statusHistory.status.label}"></span>
+				</p>
+			</li>
+		</ul>
+		<div class="ticketting-line"></div>
+		<form th:action="@{/modifTicket}" th:object="${ticketForm}"
+			method="POST" class="mt-3">
+			<div class="form-group">
+				<input type="text" class="form-control" name="ticketTitle"
+					th:field="*{title}" id="ticketDetail"
+					placeholder="New task's title">
+			</div>
+			<div class="form-group">
+				<textarea class="form-control" name="ticketDetail"
+					th:field="*{description}" id="ticketDetail" rows="3"
+					placeholder="New task's details"></textarea>
+			</div>
+			<!-- Radio -->
+			<div th:each="radioOption : ${ticketForm.radioButtonsOptions}"
+				class="form-check mb-3">
+				<input class="form-check-input" type="radio"
+					th:field=${ticketForm.radioSelected} th:value="${radioOption}">
+				<label class="form-check-label" th:text="${radioOption}"
+					th:for="${radioOption}"></label>
+			</div>
+			<!-- End Radio -->
+			<!-- Assignation utilisateur -->
+			<label class="h5">Add user on task</label> <select
+				th:field="*{idUsers}" multiple="multiple"
+				class="js-example-basic-multiple js-states form-control">
+				<option th:each="user : ${usersGroup}" th:value="${user.id}"
+					th:text="${user.pseudo}"></option>
+			</select>
+			<div class="d-flex justify-content-around mt-3">
+				<button type="submit" class="btn btn-success" style="width: 7rem;">Submit</button>
+				<a th:if="groupSelectedByUserId == null" th:href="/dashboard"
+					class="btn btn-warning" style="width: 7rem;">Go back</a> <a
+					th:unless="groupSelectedByUserId == null"
+					th:href="'group?groupId='+${groupSelectedByUserId}"
+					class="btn btn-warning" style="width: 7rem;">Go back</a>
+			</div>
+		</form>
+	</div>
+</div>
+<script
+	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
+	
+</script>
+<script>
+	$(".js-example-basic-multiple").select2();
+</script>
+</html>

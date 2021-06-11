@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_profil">
+	<table>
+		<tr>
+			<td><label>Id User :</label></td>
+			<td th:text="${user.id}" ></td>
+		</tr>
+		<tr>
+			<td><label>Pseudo :</label></td>
+			<td th:text="${user.pseudo}" ></td>
+		</tr>
+		<tr>
+			<td><label>Login :</label></td>
+			<td th:text="${user.login}" ></td>
+		</tr>
+		<tr>
+			<td><label>Password :</label></td>
+			<td th:text="${user.password}" ></td>
+		</tr>
+		
+	</table>
+</body>

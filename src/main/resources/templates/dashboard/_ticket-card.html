@@ -1,0 +1,10 @@
+<div class="card" style="width: 19rem; margin-left: auto; margin-right: auto;">
+	<div class="card-body">
+		<h5 class="card-title text-center" th:text="${ticket.title}"></h5>
+		<div class="d-flex justify-content-around">
+			<a th:href="'ticket?ticketId='+${ticket.id}" class="btn btn-primary" style="width: 7rem;"> Details </a>
+			<a th:if="${isUserAdmin}" th:href="'ticket-admin?ticketId='+${ticket.id}"
+				class="btn btn-success" style="width: 7rem;"> Edit </a>
+		</div>
+	</div>
+</div>
