@@ -2,10 +2,12 @@ package fr.eql.ticketing.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import fr.eql.ticketing.entity.User;
+import fr.eql.ticketing.exception.restController.EntityNotFoundException;
 import fr.eql.ticketing.repository.UserRepository;
 
 @Service

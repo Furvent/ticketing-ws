@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String login, password, pseudo;
+	@Column(unique = true)
+	private String login;
+	private String password, pseudo;
 	private LocalDateTime creationAccountDate;
 
 	@OneToMany(mappedBy = "user")
