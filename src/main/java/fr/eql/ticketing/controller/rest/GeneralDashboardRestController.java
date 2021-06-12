@@ -50,18 +50,33 @@ public class GeneralDashboardRestController {
 			return new ResponseEntity<Long>(groupEntity.getId(), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping("/updateUser")
+	public ResponseEntity<?> updateUserData(@RequestBody UpdatedUser userNewData) {
+		try {
+			// TODO: rework if using spring security. Actually no check on login validity
+			User userEntity = userService.getUserWithLogin(userNewData.getLogin());
+			if (!userNewData.getNewPassword().isEmpty()) {
+				System.err.println("userEntityPwd: " + userEntity.getPassword());
+				System.err.println("userNewDataPwd: " + userNewData.getOldPassword());
+				if (!userNewData.getOldPassword().equals(userEntity.getPassword())) {
+					throw new InvalidNewDataPostException("Old password invalid");
+				} else {
+					userEntity.setPassword(userNewData.getNewPassword());
+				}
+			}
+			if (!userNewData.getNewPseudo().isEmpty()) {
+				userEntity.setPseudo(userNewData.getNewPseudo());
+			}
+			userService.save(userEntity);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-//	@PutMapping("/updateUser")
-//	public ResponseEntity<?> updateUserData(@RequestBody UpdatedUser userNewData) {
-//		try {
-//			// TODO: rework if using spring security
-//			User userEntity = userService.get
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//	}
 
 }

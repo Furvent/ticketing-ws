@@ -10,6 +10,8 @@ public interface UserService {
 	public List<User> getAllUsers();
 
 	public User getUserWithId(long idToSearch);
+	
+	public User getUserWithLogin(String login);
 
 	public User getUserForConnection(String login, String password);
 }

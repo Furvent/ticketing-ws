@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
 	public User getUserWithId(long idToSearch) {
 		return repository.findById(idToSearch).get();
 	}
+	
+	@Override
+	public User getUserWithLogin(String login) {
+		return repository.findByLogin(login);
+	}
 
 	@Override
 	public User getUserForConnection(String login, String password) {
@@ -46,4 +51,5 @@ public class UserServiceImpl implements UserService {
 		}
 		return returnedUser;
 	}
+
 }
