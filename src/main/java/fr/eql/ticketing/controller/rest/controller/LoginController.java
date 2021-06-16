@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.eql.ticketing.controller.rest.dto.create.LoginForm;
 import fr.eql.ticketing.controller.rest.dto.create.NewUser;
 import fr.eql.ticketing.entity.User;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
@@ -54,7 +55,17 @@ public class LoginController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(errorMessageToUser, HttpStatus.BAD_REQUEST);
 		}
-		
 	}
+	
+//	@PostMapping("/login")
+//	public ResponseEntity<?> loginUser(@RequestBody LoginForm loginForm) {
+//		try {
+//			if (loginForm.getLogin().isEmpty() || loginForm.getPassword().isEmpty()) {
+//				throw new InvalidNewDataPostException("When user try to login, missing login or password");
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//	}
 
 }
