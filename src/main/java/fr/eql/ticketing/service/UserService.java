@@ -14,6 +14,8 @@ public interface UserService {
 	public User getUserWithLogin(String login);
 	
 	public boolean checkIfUserExistWithThisLogin(String login);
+	
+	public boolean checkIfUserExistWithThisId(Long id);
 
 	public User getUserForConnection(String login, String password);
 }

@@ -33,10 +33,10 @@ public class Group {
 	@JoinColumn(nullable = false)
 	private User createdBy;
 
-	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "group")
 	private Set<Membership> memberships = new HashSet<Membership>();
 
-	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "group")
 	private Set<Ticket> tickets = new HashSet<Ticket>();
 
 	public Group() {

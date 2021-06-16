@@ -54,5 +54,10 @@ public class UserServiceImpl implements UserService {
 	public boolean checkIfUserExistWithThisLogin(String login) {
 		return repository.existsByLogin(login);
 	}
+	
+	@Override
+	public boolean checkIfUserExistWithThisId(Long id) {
+		return repository.existsById(id);
+	}
 
 }
