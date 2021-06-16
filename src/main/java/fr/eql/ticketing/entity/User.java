@@ -24,7 +24,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(unique = true)
-	private String login;
+	private String username;
 	private String password, pseudo;
 	private LocalDateTime creationAccountDate;
 
@@ -40,8 +40,8 @@ public class User {
 	public User() {
 	}
 
-	public User(String login, String password, String pseudo, LocalDateTime creationAccountDate) {
-		this.login = login;
+	public User(String username, String password, String pseudo, LocalDateTime creationAccountDate) {
+		this.username = username;
 		this.password = password;
 		this.pseudo = pseudo;
 		this.creationAccountDate = creationAccountDate;
@@ -53,7 +53,7 @@ public class User {
 		int result = 1;
 		result = prime * result + ((creationAccountDate == null) ? 0 : creationAccountDate.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
 		return result;
@@ -75,10 +75,10 @@ public class User {
 			return false;
 		if (id != other.id)
 			return false;
-		if (login == null) {
-			if (other.login != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!login.equals(other.login))
+		} else if (!username.equals(other.username))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -95,7 +95,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", pseudo=" + pseudo
 				+ ", creationAccountDate=" + creationAccountDate + "]";
 	}
 

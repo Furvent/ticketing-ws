@@ -23,14 +23,14 @@ import lombok.ToString;
  */
 public class GeneralDashboardData {
 	private long userId;
-	private String userLogin, userPseudo;
+	private String userUsername, userPseudo;
 	private LocalDateTime userCreationAccountDate;
 	private List<GroupData> groupsData = new ArrayList<GroupData>();
 
 	// TODO: Add comments list
 	public GeneralDashboardData(User user, List<GroupData> groupsData) {
 		this.userId = user.getId();
-		this.userLogin = user.getLogin();
+		this.userUsername = user.getUsername();
 		this.userPseudo = user.getPseudo();
 		this.userCreationAccountDate = user.getCreationAccountDate();
 		this.groupsData = groupsData;

@@ -8,10 +8,10 @@ import fr.eql.ticketing.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	public List<User> findByLoginAndPassword(String login, String password);
+	public List<User> findByUsernameAndPassword(String username, String password);
 
-	public User findByLogin(String login);
+	public User findByUsername(String username);
 	
-	public boolean existsByLogin(String login);
+	public boolean existsByUsername(String username);
 
 }

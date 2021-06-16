@@ -31,11 +31,11 @@ public class LoginController {
 		String errorMessageToUser = "";
 		try {
 			// List of Checks
-			if (newUser.getLogin().isEmpty()) {
+			if (newUser.getUsername().isEmpty()) {
 				errorMessageToUser = "Your login is empty";
 				throw new InvalidNewDataPostException("Can't create new user because login is empty");
 			}
-			if (userService.checkIfUserExistWithThisLogin(newUser.getLogin())) {
+			if (userService.checkIfUserExistWithThisUsername(newUser.getUsername())) {
 				errorMessageToUser = "Login already used";
 				throw new InvalidNewDataPostException("Can't create new user because login already exists");
 			}
@@ -48,9 +48,9 @@ public class LoginController {
 				throw new InvalidNewDataPostException("Can't create new user because pseudo is empty");
 			}
 			// If code reaches here, we can save new user
-			User newUserEntity = new User(newUser.getLogin(), newUser.getPassword(), newUser.getPseudo(), LocalDateTime.now());
+			User newUserEntity = new User(newUser.getUsername(), newUser.getPassword(), newUser.getPseudo(), LocalDateTime.now());
 			userService.save(newUserEntity);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<Long>(newUserEntity.getId(), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(errorMessageToUser, HttpStatus.BAD_REQUEST);
@@ -60,9 +60,10 @@ public class LoginController {
 //	@PostMapping("/login")
 //	public ResponseEntity<?> loginUser(@RequestBody LoginForm loginForm) {
 //		try {
-//			if (loginForm.getLogin().isEmpty() || loginForm.getPassword().isEmpty()) {
+//			if (loginForm.getUsername().isEmpty() || loginForm.getPassword().isEmpty()) {
 //				throw new InvalidNewDataPostException("When user try to login, missing login or password");
 //			}
+//			if (userService.getUserWithLogin(null))
 //		} catch (Exception e) {
 //			// TODO: handle exception
 //		}

@@ -99,10 +99,8 @@ public class GeneralDashboardRestController {
 	public ResponseEntity<?> updateUserData(@RequestBody UpdatedUser userNewData) {
 		try {
 			// TODO: rework if using spring security. Actually no check on login validity
-			User userEntity = userService.getUserWithLogin(userNewData.getLogin());
+			User userEntity = userService.getUserWithUsername(userNewData.getLogin());
 			if (!userNewData.getNewPassword().isEmpty()) {
-				System.err.println("userEntityPwd: " + userEntity.getPassword());
-				System.err.println("userNewDataPwd: " + userNewData.getOldPassword());
 				if (!userNewData.getOldPassword().equals(userEntity.getPassword())) {
 					throw new InvalidNewDataPostException("Old password invalid");
 				} else {

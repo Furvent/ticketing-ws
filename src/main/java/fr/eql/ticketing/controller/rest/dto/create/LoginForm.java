@@ -8,5 +8,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class LoginForm {
-	private String login, password;
+	private String username, password;
 }

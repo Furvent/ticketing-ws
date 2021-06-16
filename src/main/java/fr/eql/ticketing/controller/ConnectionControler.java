@@ -41,18 +41,18 @@ public class ConnectionControler {
 		return new RedirectView("/dashboard");
 	}
 
-	@PostMapping("/connexionSubmit")
-	public RedirectView connexionSubmit(@ModelAttribute("user") User user, Model model) {
-		RedirectView retour;
-		User userConnected = userService.getUserForConnection(user.getLogin(), user.getPassword());
-		if (userConnected != null) {
-			model.addAttribute("user", userConnected);
-			retour = new RedirectView("/dashboard");
-		} else {
-			retour = new RedirectView("/connect");
-		}
-		return retour;
-	}
+//	@PostMapping("/connexionSubmit")
+//	public RedirectView connexionSubmit(@ModelAttribute("user") User user, Model model) {
+//		RedirectView retour;
+//		User userConnected = userService.getUserForConnection(user.getUsername(), user.getPassword());
+//		if (userConnected != null) {
+//			model.addAttribute("user", userConnected);
+//			retour = new RedirectView("/dashboard");
+//		} else {
+//			retour = new RedirectView("/connect");
+//		}
+//		return retour;
+//	}
 	
 	/* version modele 
 	@RequestMapping("/session-end")

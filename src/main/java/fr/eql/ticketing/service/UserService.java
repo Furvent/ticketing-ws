@@ -11,11 +11,9 @@ public interface UserService {
 
 	public User getUserWithId(long idToSearch);
 	
-	public User getUserWithLogin(String login);
+	public User getUserWithUsername(String username);
 	
-	public boolean checkIfUserExistWithThisLogin(String login);
+	public boolean checkIfUserExistWithThisUsername(String username);
 	
 	public boolean checkIfUserExistWithThisId(Long id);
-
-	public User getUserForConnection(String login, String password);
 }
