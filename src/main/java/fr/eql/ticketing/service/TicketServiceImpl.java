@@ -1,6 +1,7 @@
 package fr.eql.ticketing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,8 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public Ticket getTicketById(Long ticketId) {
-		return repository.findById(ticketId).get();
+		Optional<Ticket> ticket = repository.findById(ticketId);
+		return ticket.isPresent() ? ticket.get() : null;
 	}
 
 	@Override

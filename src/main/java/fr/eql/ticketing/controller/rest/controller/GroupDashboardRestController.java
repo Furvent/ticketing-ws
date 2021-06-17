@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.eql.ticketing.controller.rest.dto.create.NewTicket;
 import fr.eql.ticketing.controller.rest.dto.read.GroupDashboardData;
 import fr.eql.ticketing.controller.rest.dto.read.GroupData;
 import fr.eql.ticketing.controller.rest.dto.read.PublicUser;
@@ -79,6 +80,16 @@ public class GroupDashboardRestController {
 			GroupDashboardData groupDashboardData = new GroupDashboardData(groupData, groupTickets);
 			return new ResponseEntity<GroupDashboardData>(groupDashboardData, HttpStatus.OK);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	public ResponseEntity<?> addTicket(@RequestBody NewTicket newTicket) {
+		try {
+			// Check if group exists
+//			if (groupService.get)
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

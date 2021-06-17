@@ -10,4 +10,5 @@ public interface GroupService {
 	public Group getGroupById(Long groupId);
 	public void delete(Group group);
 	public Group update(Group group);
+	public boolean checkIfGroupExistWithThisId(long id);
 }

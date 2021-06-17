@@ -9,12 +9,14 @@ import fr.eql.ticketing.entity.Group;
 import fr.eql.ticketing.repository.GroupRepository;
 
 @Service
-public class GroupServiceImpl implements GroupService{
-	GroupRepository repository;
-	
-	
+public class GroupServiceImpl implements GroupService {
+	private GroupRepository repository;
+
 	public GroupServiceImpl(GroupRepository repository) {
-		super();
+		this.repository = repository;
+	}
+
+	public void setRepository(GroupRepository repository) {
 		this.repository = repository;
 	}
 
@@ -44,7 +46,8 @@ public class GroupServiceImpl implements GroupService{
 		return repository.save(group);
 	}
 
-	public void setRepository(GroupRepository repository) {
-		this.repository = repository;
+	@Override
+	public boolean checkIfGroupExistWithThisId(long id) {
+		return repository.existsById(id);
 	}
 }
