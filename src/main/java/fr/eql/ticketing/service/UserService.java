@@ -16,4 +16,6 @@ public interface UserService {
 	public boolean checkIfUserExistWithThisUsername(String username);
 	
 	public boolean checkIfUserExistWithThisId(Long id);
+	
+	public User getUserWithUsernameAndPassword(String username, String password);
 }

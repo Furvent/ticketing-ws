@@ -1,6 +1,7 @@
 package fr.eql.ticketing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,8 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public Group getGroupById(Long groupId) {
-		return repository.findById(groupId).get();
+		Optional<Group> group = repository.findById(groupId);
+		return group.isPresent() ? group.get() : null;
 	}
 
 	@Override

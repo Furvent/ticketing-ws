@@ -57,16 +57,21 @@ public class LoginController {
 		}
 	}
 	
-//	@PostMapping("/login")
-//	public ResponseEntity<?> loginUser(@RequestBody LoginForm loginForm) {
-//		try {
-//			if (loginForm.getUsername().isEmpty() || loginForm.getPassword().isEmpty()) {
-//				throw new InvalidNewDataPostException("When user try to login, missing login or password");
-//			}
-//			if (userService.getUserWithLogin(null))
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//	}
+	@PostMapping("")
+	public ResponseEntity<?> loginUser(@RequestBody LoginForm loginForm) {
+		try {
+			if (loginForm.getUsername().isEmpty() || loginForm.getPassword().isEmpty()) {
+				throw new InvalidNewDataPostException("When user try to login, missing login or password");
+			}
+			User user = userService.getUserWithUsernameAndPassword(loginForm.getUsername(), loginForm.getPassword());
+			if (user == null) {
+				throw new InvalidNewDataPostException("Login and / or password are wrong");
+			}
+			return new ResponseEntity<Long>(user.getId(), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+	}
 
 }

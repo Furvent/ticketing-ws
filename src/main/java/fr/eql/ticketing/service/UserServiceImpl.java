@@ -1,6 +1,7 @@
 package fr.eql.ticketing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUserWithUsername(String username) {
-		return repository.findByUsername(username);
+		return repository.findByUsername(username).get();
 	}
 
 	@Override
@@ -44,6 +45,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean checkIfUserExistWithThisId(Long id) {
 		return repository.existsById(id);
+	}
+
+	@Override
+	public User getUserWithUsernameAndPassword(String username, String password) {
+		Optional<User> user = repository.findByUsernameAndPassword(username, password);
+		return user.isPresent() ? user.get() : null;
 	}
 
 }
