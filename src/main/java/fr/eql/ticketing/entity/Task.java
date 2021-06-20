@@ -10,11 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,19 +33,16 @@ public class Task {
 	@JoinColumn(nullable = false)
 	private Ticket ticket;
 
-	public Task() {
-	}
-
-	public Task(User user, Ticket ticket, LocalDateTime userAddedDate) {
-		this.user = user;
-		this.ticket = ticket;
-		this.userAddedDate = userAddedDate;
-	}
-
 	public Task(LocalDateTime userAddedDate, User user) {
 		super();
 		this.userAddedDate = userAddedDate;
 		this.user = user;
+	}
+	
+	public Task(User user, Ticket ticket, LocalDateTime userAddedDate) {
+		this.user = user;
+		this.ticket = ticket;
+		this.userAddedDate = userAddedDate;
 	}
 
 	@Override

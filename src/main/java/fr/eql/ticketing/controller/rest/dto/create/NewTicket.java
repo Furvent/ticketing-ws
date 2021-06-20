@@ -14,6 +14,6 @@ import lombok.ToString;
 public class NewTicket {
 	private long groupId;
 	private String title, description;
-	private List<PublicUser> usersOnTas = new ArrayList<PublicUser>();
+	private List<PublicUser> usersOnTask = new ArrayList<PublicUser>();
 	
 }

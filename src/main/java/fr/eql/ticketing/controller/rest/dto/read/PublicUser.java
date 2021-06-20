@@ -12,4 +12,5 @@ import lombok.ToString;
 public class PublicUser {
 	private long id;
 	private String pseudo;
+	
 }

@@ -22,6 +22,11 @@ public class StatusHistoryServiceImpl implements StatusHistoryService {
 	public StatusHistory save(StatusHistory statusHistory) {
 		return repository.save(statusHistory);
 	}
+	
+	@Override
+	public List<StatusHistory> saveAll(List<StatusHistory> statusHistoryList) {
+		return repository.saveAll(statusHistoryList);
+	}
 
 	@Override
 	public List<StatusHistory> getAllStatusHistories() {

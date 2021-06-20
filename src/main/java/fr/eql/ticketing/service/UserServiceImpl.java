@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserWithId(long idToSearch) {
-		return repository.findById(idToSearch).get();
+		Optional<User> user = repository.findById(idToSearch);
+		return user.isPresent() ? user.get() : null;
 	}
 	
 	@Override
@@ -51,6 +52,11 @@ public class UserServiceImpl implements UserService {
 	public User getUserWithUsernameAndPassword(String username, String password) {
 		Optional<User> user = repository.findByUsernameAndPassword(username, password);
 		return user.isPresent() ? user.get() : null;
+	}
+
+	@Override
+	public List<User> getMultipleUsersWithIds(List<Long> ids) {
+		return repository.findAllById(ids);
 	}
 
 }

@@ -77,13 +77,16 @@ public class GeneralDashboardRestController {
 	@PostMapping("/addGroup")
 	public ResponseEntity<?> postNewGroup(@RequestBody NewGroup newGroup) {
 		try {
-			if (newGroup.getName() == "") {
+			if (newGroup.getName().isEmpty()) {
 				throw new InvalidNewDataPostException("Group's name cannot be empty");
 			}
 			if (newGroup.getCreatorId() < 1) {
 				throw new InvalidNewDataPostException("Group creator's id is invalid");
 			}
 			User creatorUser = userService.getUserWithId(newGroup.getCreatorId());
+			if (creatorUser == null) {
+				throw new InvalidNewDataPostException("Group creator's id doesn't exist");
+			}
 			Group groupEntity = new Group(newGroup.getName(), creatorUser, LocalDateTime.now());
 			groupService.save(groupEntity);
 			return new ResponseEntity<Long>(groupEntity.getId(), HttpStatus.OK);

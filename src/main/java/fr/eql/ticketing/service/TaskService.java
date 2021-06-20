@@ -8,6 +8,7 @@ import fr.eql.ticketing.entity.User;
 
 public interface TaskService {
 	public Task save(Task task);
+	public List<Task> saveAll(List<Task> tasks);
 	public List<Task> getAllTasks();
 	public Task getTaskById(Long taskId);
 	public void delete(Task task);

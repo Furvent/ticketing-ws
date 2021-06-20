@@ -10,11 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class StatusHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,18 +32,10 @@ public class StatusHistory {
 	@JoinColumn(name = "status_id", nullable = false)
 	private Status status;
 
-	public StatusHistory() {
-	}
-
 	public StatusHistory(Status status, Ticket ticket, LocalDateTime creationDate) {
 		this.statusDate = creationDate;
 		this.status = status;
 		this.ticket = ticket;
-	}
-
-	public StatusHistory(LocalDateTime statusDate, Status status) {
-		this.statusDate = statusDate;
-		this.status = status;
 	}
 
 	@Override

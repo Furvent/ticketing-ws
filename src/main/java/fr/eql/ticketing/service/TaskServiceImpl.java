@@ -25,6 +25,11 @@ public class TaskServiceImpl implements TaskService {
 	public Task save(Task task) {
 		return repository.save(task);
 	}
+	
+	@Override
+	public List<Task> saveAll(List<Task> tasks) {
+		return repository.saveAll(tasks);
+	}
 
 	@Override
 	public List<Task> getAllTasks() {
@@ -60,4 +65,5 @@ public class TaskServiceImpl implements TaskService {
 	public List<Task> getTaskByUserAndTicket(User user, Ticket ticket) {
 		return repository.findByUserAndTicket(user, ticket);
 	}
+
 }

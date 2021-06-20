@@ -8,6 +8,8 @@ public interface UserService {
 	public User save(User usertoAdd);
 
 	public List<User> getAllUsers();
+	
+	public List<User> getMultipleUsersWithIds(List<Long> ids);
 
 	public User getUserWithId(long idToSearch);
 	
