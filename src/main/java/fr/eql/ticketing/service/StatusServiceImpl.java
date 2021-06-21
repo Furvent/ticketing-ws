@@ -1,6 +1,7 @@
 package fr.eql.ticketing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,7 @@ public class StatusServiceImpl implements StatusService{
 
 	@Override
 	public Status getStatusByLabel(String label) {
-		return repository.findByLabel(label);
+		Optional<Status> status = repository.findByLabel(label);
+		return status.isPresent() ? status.get() : null;
 	}
 }

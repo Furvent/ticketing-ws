@@ -16,7 +16,6 @@ import fr.eql.ticketing.entity.Task;
 import fr.eql.ticketing.entity.Ticket;
 import fr.eql.ticketing.entity.User;
 import fr.eql.ticketing.enums.TicketStatus;
-import fr.eql.ticketing.service.CommentService;
 import fr.eql.ticketing.service.GroupService;
 import fr.eql.ticketing.service.MembershipService;
 import fr.eql.ticketing.service.StatusHistoryService;
@@ -47,8 +46,6 @@ public class InitDataSet {
 	StatusService statusService;
 	@Autowired
 	StatusHistoryService statusHistoryService;
-	@Autowired
-	CommentService commentService;
 	
 	@PostConstruct
 	public void initDemoData() {
