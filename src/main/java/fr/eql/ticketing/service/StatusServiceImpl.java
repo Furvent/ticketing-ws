@@ -1,6 +1,5 @@
 package fr.eql.ticketing.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -15,10 +14,6 @@ public class StatusServiceImpl implements StatusService{
 	public StatusServiceImpl(StatusRepository repository) {
 		this.repository = repository;
 	}
-	
-	public void setRepository(StatusRepository repository) {
-		this.repository = repository;
-	}
 
 	@Override
 	public Status save(Status status) {
@@ -26,23 +21,9 @@ public class StatusServiceImpl implements StatusService{
 	}
 
 	@Override
-	public List<Status> getAllStatus() {
-		return repository.findAll();
-	}
-
-	@Override
 	public Status getStatusById(Long statusId) {
-		return repository.findById(statusId).get();
-	}
-
-	@Override
-	public void delete(Status status) {
-		repository.delete(status);
-	}
-
-	@Override
-	public Status update(Status status) {
-		return repository.save(status);
+		Optional<Status> status = repository.findById(statusId);
+		return status.isPresent() ? status.get() : null;
 	}
 
 	@Override
