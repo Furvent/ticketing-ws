@@ -10,7 +10,7 @@ import fr.eql.ticketing.repository.TaskRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-	TaskRepository repository;
+	private TaskRepository repository;
 
 	public TaskServiceImpl(TaskRepository repository) {
 		this.repository = repository;

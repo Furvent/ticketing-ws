@@ -12,7 +12,7 @@ import fr.eql.ticketing.repository.MembershipRepository;
 
 @Service
 public class MembershipServiceImpl implements MembershipService {
-	MembershipRepository repository;
+	private MembershipRepository repository;
 
 	public MembershipServiceImpl(MembershipRepository repository) {
 		this.repository = repository;

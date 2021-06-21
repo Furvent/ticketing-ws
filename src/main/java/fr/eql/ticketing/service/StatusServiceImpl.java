@@ -9,7 +9,7 @@ import fr.eql.ticketing.repository.StatusRepository;
 
 @Service
 public class StatusServiceImpl implements StatusService{
-	StatusRepository repository;
+	private StatusRepository repository;
 	
 	public StatusServiceImpl(StatusRepository repository) {
 		this.repository = repository;

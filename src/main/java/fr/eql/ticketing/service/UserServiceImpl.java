@@ -10,7 +10,6 @@ import fr.eql.ticketing.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 	private UserRepository repository;
 
 	public UserServiceImpl(UserRepository repository) {

@@ -10,7 +10,7 @@ import fr.eql.ticketing.repository.StatusHistoryRepository;
 
 @Service
 public class StatusHistoryServiceImpl implements StatusHistoryService {
-	StatusHistoryRepository repository;
+	private StatusHistoryRepository repository;
 
 	public StatusHistoryServiceImpl(StatusHistoryRepository repository) {
 		this.repository = repository;

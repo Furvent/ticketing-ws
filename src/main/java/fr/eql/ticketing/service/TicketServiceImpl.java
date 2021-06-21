@@ -9,7 +9,6 @@ import fr.eql.ticketing.repository.TicketRepository;
 
 @Service
 public class TicketServiceImpl implements TicketService {
-
 	private TicketRepository repository;
 
 	public TicketServiceImpl(TicketRepository repository) {
