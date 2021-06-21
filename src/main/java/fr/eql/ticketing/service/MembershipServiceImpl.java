@@ -18,44 +18,21 @@ public class MembershipServiceImpl implements MembershipService {
 		this.repository = repository;
 	}
 
-	public void setRepository(MembershipRepository repository) {
-		this.repository = repository;
-	}
-
 	@Override
 	public Membership save(Membership membership) {
 		return repository.save(membership);
 	}
 
 	@Override
-	public List<Membership> getAllMemberships() {
-		return repository.findAll();
-	}
-
-	@Override
 	public Membership getMembershipById(Long membershipId) {
-		return repository.findById(membershipId).get();
-	}
-
-	@Override
-	public void delete(Membership membership) {
-		repository.delete(membership);
-	}
-
-	@Override
-	public Membership update(Membership membership) {
-		return repository.save(membership);
+		Optional<Membership> membership = repository.findById(membershipId);
+		return membership.isPresent() ? membership.get() : null;
 	}
 
 	@Override
 	public List<Membership> getMembershipsWithUser(User user) {
 		return repository.findByUser(user);
 		
-	}
-
-	@Override
-	public List<Membership> getMembershipsWithGroup(Group group) {
-		return repository.findByGroup(group);
 	}
 
 	@Override
