@@ -1,6 +1,7 @@
 package fr.eql.ticketing.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -55,6 +56,12 @@ public class MembershipServiceImpl implements MembershipService {
 	@Override
 	public List<Membership> getMembershipsWithGroup(Group group) {
 		return repository.findByGroup(group);
+	}
+
+	@Override
+	public Membership getMembershipWithUserAndGroup(User user, Group group) {
+		Optional<Membership> membership = repository.findByUserAndGroup(user, group);
+		return membership.isPresent() ? membership.get() : null;
 	}
 
 }

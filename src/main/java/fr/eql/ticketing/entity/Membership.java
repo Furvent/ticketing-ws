@@ -20,7 +20,7 @@ public class Membership {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime joinDate;
-	private LocalDateTime withDrawalDate;
+	private LocalDateTime withdrawalDate;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -45,7 +45,7 @@ public class Membership {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((joinDate == null) ? 0 : joinDate.hashCode());
-		result = prime * result + ((withDrawalDate == null) ? 0 : withDrawalDate.hashCode());
+		result = prime * result + ((withdrawalDate == null) ? 0 : withdrawalDate.hashCode());
 		return result;
 	}
 
@@ -68,17 +68,17 @@ public class Membership {
 				return false;
 		} else if (!joinDate.equals(other.joinDate))
 			return false;
-		if (withDrawalDate == null) {
-			if (other.withDrawalDate != null)
+		if (withdrawalDate == null) {
+			if (other.withdrawalDate != null)
 				return false;
-		} else if (!withDrawalDate.equals(other.withDrawalDate))
+		} else if (!withdrawalDate.equals(other.withdrawalDate))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Membership [id=" + id + ", joinDate=" + joinDate + ", withDrawalDate=" + withDrawalDate + "]";
+		return "Membership [id=" + id + ", joinDate=" + joinDate + ", withdrawalDate=" + withdrawalDate + "]";
 	}
 
 }

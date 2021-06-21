@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.eql.ticketing.controller.rest.dto.create.UserIdGroupIdForm;
 import fr.eql.ticketing.controller.rest.dto.create.NewTicket;
 import fr.eql.ticketing.controller.rest.dto.read.GroupDashboardData;
 import fr.eql.ticketing.controller.rest.dto.read.GroupData;
@@ -22,6 +23,7 @@ import fr.eql.ticketing.controller.rest.dto.read.StatusData;
 import fr.eql.ticketing.controller.rest.dto.read.TicketData;
 import fr.eql.ticketing.controller.rest.dto.update.UpdatedTicket;
 import fr.eql.ticketing.entity.Group;
+import fr.eql.ticketing.entity.Membership;
 import fr.eql.ticketing.entity.Status;
 import fr.eql.ticketing.entity.StatusHistory;
 import fr.eql.ticketing.entity.Task;
@@ -172,6 +174,69 @@ public class GroupDashboardRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PostMapping("/add-user")
+	public ResponseEntity<?> addUserToGroup(@RequestBody UserIdGroupIdForm userIdGroupIdForm) {
+		try {
+			// Check if group exist
+			Group groupEntity = groupService.getGroupById(userIdGroupIdForm.getGroupId());
+			if (groupEntity == null) {
+				throw new InvalidNewDataPostException(
+						"Group with id -" + userIdGroupIdForm.getGroupId() + "- doesn't exist.");
+			}
+			// Check if user exist
+			User userEntity = userService.getUserWithId(userIdGroupIdForm.getUserId());
+			if (userEntity == null) {
+				throw new InvalidNewDataPostException(
+						"User with id -" + userIdGroupIdForm.getUserId() + "- doesn't exist.");
+			}
+			// TODO: Check if user was a member but withdrawn from group
+			// Create membership
+			Membership newMembership = new Membership(userEntity, groupEntity, LocalDateTime.now());
+			membershipService.save(newMembership);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+//	@PostMapping("/remove-user")
+//	public ResponseEntity<?> removeUserFromGroup(@RequestBody UserIdGroupIdForm userIdGroupIdForm) {
+//		try {
+//			// Check if group exists
+//			Group groupEntity = groupService.getGroupById(userIdGroupIdForm.getGroupId());
+//			if (groupEntity == null) {
+//				throw new InvalidNewDataPostException(
+//						"Group with id -" + userIdGroupIdForm.getGroupId() + "- doesn't exist.");
+//			}
+//			// Check if user exists
+//			User userEntity = userService.getUserWithId(userIdGroupIdForm.getUserId());
+//			if (userEntity == null) {
+//				throw new InvalidNewDataPostException(
+//						"User with id -" + userIdGroupIdForm.getUserId() + "- doesn't exist.");
+//			}
+//			// Check if membership exists
+//			Membership membershipEntity = membershipService.getMembershipWithUserAndGroup(userEntity, groupEntity);
+//			if (membershipEntity == null) {
+//				throw new InvalidNewDataPostException(
+//						"Cannot remove user with id -" + userIdGroupIdForm.getUserId() + "- from group with id -"
+//								+ userIdGroupIdForm.getGroupId() + "- because there is no membership between them.");
+//			}
+//			if (membershipEntity.getWithdrawalDate() != null) {
+//				throw new InvalidNewDataPostException("Cannot remove user with id -" + userIdGroupIdForm.getUserId()
+//						+ "- from group with id -" + userIdGroupIdForm.getGroupId()
+//						+ "- because user was already removed at date " + membershipEntity.getWithdrawalDate() + ".");
+//			}
+//			membershipEntity.setWithdrawalDate(LocalDateTime.now());
+//			membershipService.save(membershipEntity);
+//			return new ResponseEntity<>(HttpStatus.OK);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
 
 	private void addNewStatusOnTicket(Ticket ticket, String statusLabel) {
 		// TODO: Check if last status in history is the same of the new label status
