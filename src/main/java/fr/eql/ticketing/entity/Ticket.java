@@ -26,7 +26,7 @@ public class Ticket {
 	private String title;
 
 	@Column(length = 3000)
-	private String details;
+	private String description;
 
 	@OneToMany(mappedBy = "ticket")
 	private Set<StatusHistory> statusHistory = new HashSet<StatusHistory>();
@@ -45,7 +45,7 @@ public class Ticket {
 	}
 
 	public Ticket(String details, String title) {
-		this.details = details;
+		this.description = details;
 		this.title = title;
 	}
 
@@ -58,7 +58,7 @@ public class Ticket {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((details == null) ? 0 : details.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -74,10 +74,10 @@ public class Ticket {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
-		if (details == null) {
-			if (other.details != null)
+		if (description == null) {
+			if (other.description != null)
 				return false;
-		} else if (!details.equals(other.details))
+		} else if (!description.equals(other.description))
 			return false;
 		if (group == null) {
 			if (other.group != null)
@@ -99,7 +99,7 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", details=" + details + ", title=" + title + ", groupiD=" + group.getId() + "]";
+		return "Ticket [id=" + id + ", description=" + description + ", title=" + title + ", groupiD=" + group.getId() + "]";
 	}
 
 }

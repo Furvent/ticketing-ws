@@ -21,7 +21,7 @@ public class TicketData {
 	public TicketData(Ticket ticket, List<StatusData> history, List<PublicUser> usersOnTask) {
 		this.id = ticket.getId();
 		this.title = ticket.getTitle();
-		this.description = ticket.getDetails();
+		this.description = ticket.getDescription();
 		this.history = history;
 		this.usersOnTask = usersOnTask;
 	}

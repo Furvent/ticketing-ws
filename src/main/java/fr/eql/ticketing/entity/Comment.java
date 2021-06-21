@@ -96,7 +96,7 @@ public class Comment {
 	public String toString() {
 		return "Comment [id=" + id + ", text=" + text + ", createDate=" + createDate + ", parent=" + parent
 				+ ", number of children=" + children.size() + ", user=" + user.getPseudo() + ", ticket="
-				+ ticket.getDetails() + "]";
+				+ ticket.getDescription() + "]";
 	}
 
 }

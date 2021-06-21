@@ -144,7 +144,7 @@ public class GroupDashboardRestController {
 						"Ticket with id -" + updatedTicket.getTicketId() + "- doesn't exist.");
 			}
 			if (!updatedTicket.getNewDescription().isEmpty()) {
-				ticketEntity.setDetails(updatedTicket.getNewDescription());
+				ticketEntity.setDescription(updatedTicket.getNewDescription());
 			}
 			if (!updatedTicket.getNewTitle().isEmpty()) {
 				ticketEntity.setTitle(updatedTicket.getNewTitle());
