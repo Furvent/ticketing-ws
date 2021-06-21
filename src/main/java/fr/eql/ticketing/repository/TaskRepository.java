@@ -8,8 +8,10 @@ import fr.eql.ticketing.entity.Task;
 import fr.eql.ticketing.entity.Ticket;
 import fr.eql.ticketing.entity.User;
 
-public interface TaskRepository extends JpaRepository<Task, Long>{
+public interface TaskRepository extends JpaRepository<Task, Long> {
 	public List<Task> findByTicket(Ticket ticket);
+
 	public List<Task> findByUser(User user);
+
 	public List<Task> findByUserAndTicket(User user, Ticket ticket);
 }
