@@ -27,4 +27,9 @@ public class TicketServiceImpl implements TicketService {
 		return ticket.isPresent() ? ticket.get() : null;
 	}
 
+	@Override
+	public void delete(Ticket ticket) {
+		repository.delete(ticket);
+	}
+
 }

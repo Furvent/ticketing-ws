@@ -11,7 +11,7 @@ import fr.eql.ticketing.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
-	UserRepository repository;
+	private UserRepository repository;
 
 	public UserServiceImpl(UserRepository repository) {
 		this.repository = repository;
@@ -23,11 +23,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAllUsers() {
-		return repository.findAll();
-	}
-
-	@Override
 	public User getUserWithId(long idToSearch) {
 		Optional<User> user = repository.findById(idToSearch);
 		return user.isPresent() ? user.get() : null;
@@ -35,7 +30,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUserWithUsername(String username) {
-		return repository.findByUsername(username).get();
+		Optional<User> user = repository.findByUsername(username);
+		return user.isPresent() ? user.get() : null;
+	}
+	
+	@Override
+	public User getUserWithUsernameAndPassword(String username, String password) {
+		Optional<User> user = repository.findByUsernameAndPassword(username, password);
+		return user.isPresent() ? user.get() : null;
 	}
 
 	@Override
@@ -46,12 +48,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean checkIfUserExistWithThisId(Long id) {
 		return repository.existsById(id);
-	}
-
-	@Override
-	public User getUserWithUsernameAndPassword(String username, String password) {
-		Optional<User> user = repository.findByUsernameAndPassword(username, password);
-		return user.isPresent() ? user.get() : null;
 	}
 
 	@Override

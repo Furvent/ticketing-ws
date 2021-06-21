@@ -6,4 +6,6 @@ public interface TicketService {
 	public Ticket save(Ticket ticket);
 
 	public Ticket getTicketById(Long ticketId);
+	
+	public void delete(Ticket ticket);
 }
