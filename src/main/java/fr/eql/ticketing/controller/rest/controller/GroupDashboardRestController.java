@@ -137,27 +137,23 @@ public class GroupDashboardRestController {
 	@PostMapping("/update-ticket")
 	public ResponseEntity<?> updateTicket(@RequestBody UpdatedTicket updatedTicket) {
 		try {
+			// TODO: Maybe work with hibernate transaction, because Ticket is modify but if exception is throw when adding status, modifications stayed
 			// Check if ticket exist
 			Ticket ticketEntity = ticketService.getTicketById(updatedTicket.getTicketId());
+			
 			if (ticketEntity == null) {
 				throw new InvalidNewDataPostException(
 						"Ticket with id -" + updatedTicket.getTicketId() + "- doesn't exist.");
+			}
+			if (updatedTicket.getUsersOnTask().size() > 0) {
+				// TODO: add verification, users belong to that group ?
+				this.addTaskAndHistoryOnTicketWithPublicUsers(ticketEntity, updatedTicket.getUsersOnTask());
 			}
 			if (!updatedTicket.getNewDescription().isEmpty()) {
 				ticketEntity.setDescription(updatedTicket.getNewDescription());
 			}
 			if (!updatedTicket.getNewTitle().isEmpty()) {
 				ticketEntity.setTitle(updatedTicket.getNewTitle());
-			}
-			if (updatedTicket.getUsersOnTask().size() > 0) {
-				// TODO: add verification, users belong to that group ?
-				try {
-					this.addTaskAndHistoryOnTicketWithPublicUsers(ticketEntity, updatedTicket.getUsersOnTask());
-				} catch (Exception e) {
-					// Remove the ticket because bad data sent
-					ticketService.delete(ticketEntity);
-					throw e;
-				}
 			}
 			if (!updatedTicket.getNewStatus().isEmpty()) {
 				try {
