@@ -73,9 +73,9 @@ public class GroupDashboardRestController {
 			// Gathers all datum to create GroupDashBoardData. First, GroupData and then the
 			// list of TicketsData
 			// Find group's users and transform them into PublicUser
-			List<PublicUser> groupUsers = group.getMemberships().stream().map(membership -> membership.getUser())
+			List<PublicUser> groupPublicUsers = group.getMemberships().stream().map(membership -> membership.getUser())
 					.map(user -> new PublicUser(user.getId(), user.getPseudo())).collect(Collectors.toList());
-			GroupData groupData = new GroupData(group, groupUsers);
+			GroupData groupData = new GroupData(group, groupPublicUsers);
 			// Find group's tickets and transform its into TicketData;
 			List<TicketData> groupTickets = group.getTickets().stream().map(ticket -> {
 				// Find ticket history
