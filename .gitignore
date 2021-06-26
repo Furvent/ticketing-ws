@@ -17,3 +17,4 @@ target/
 
 # Properties.xml
 src/main/resources/application.properties
+/.metadata/
