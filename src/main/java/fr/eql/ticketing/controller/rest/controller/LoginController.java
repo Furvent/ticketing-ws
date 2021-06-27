@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.eql.ticketing.controller.rest.dto.create.LoginForm;
 import fr.eql.ticketing.controller.rest.dto.create.NewUser;
+import fr.eql.ticketing.controller.rest.dto.read.PrivateUser;
 import fr.eql.ticketing.entity.User;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
 import fr.eql.ticketing.service.UserService;
@@ -50,7 +51,8 @@ public class LoginController {
 			// If code reaches here, we can save new user
 			User newUserEntity = new User(newUser.getUsername(), newUser.getPassword(), newUser.getPseudo(), LocalDateTime.now());
 			userService.save(newUserEntity);
-			return new ResponseEntity<Long>(newUserEntity.getId(), HttpStatus.OK);
+			PrivateUser privateUser = new PrivateUser(newUserEntity);
+			return new ResponseEntity<PrivateUser>(privateUser, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(errorMessageToUser, HttpStatus.BAD_REQUEST);
@@ -63,11 +65,12 @@ public class LoginController {
 			if (loginForm.getUsername().isEmpty() || loginForm.getPassword().isEmpty()) {
 				throw new InvalidNewDataPostException("When user try to login, missing login or password");
 			}
-			User user = userService.getUserWithUsernameAndPassword(loginForm.getUsername(), loginForm.getPassword());
-			if (user == null) {
+			User userEntity = userService.getUserWithUsernameAndPassword(loginForm.getUsername(), loginForm.getPassword());
+			if (userEntity == null) {
 				throw new InvalidNewDataPostException("Login and / or password are wrong");
 			}
-			return new ResponseEntity<Long>(user.getId(), HttpStatus.OK);
+			PrivateUser privateUser = new PrivateUser(userEntity);
+			return new ResponseEntity<PrivateUser>(privateUser, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
