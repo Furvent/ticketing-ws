@@ -165,9 +165,10 @@ public class GroupDashboardRestController {
 				try {
 					this.addNewStatusOnTicket(ticketEntity, updatedTicket.getNewStatus());
 				} catch (Exception e) {
-					// TODO: handle exception
+					throw e;
 				}
 			}
+			ticketService.save(ticketEntity);
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (Exception e) {
