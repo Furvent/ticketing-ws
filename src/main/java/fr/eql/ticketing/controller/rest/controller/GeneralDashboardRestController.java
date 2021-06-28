@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.eql.ticketing.controller.rest.dto.create.NewGroup;
 import fr.eql.ticketing.controller.rest.dto.read.GeneralDashboardData;
 import fr.eql.ticketing.controller.rest.dto.read.GroupData;
+import fr.eql.ticketing.controller.rest.dto.read.PrivateUser;
 import fr.eql.ticketing.controller.rest.dto.read.PublicUser;
 import fr.eql.ticketing.controller.rest.dto.update.UpdatedUser;
 import fr.eql.ticketing.entity.Group;
@@ -89,7 +90,10 @@ public class GeneralDashboardRestController {
 			}
 			Group groupEntity = new Group(newGroup.getName(), creatorUser, LocalDateTime.now());
 			groupService.save(groupEntity);
-			return new ResponseEntity<Long>(groupEntity.getId(), HttpStatus.OK);
+			List<PublicUser> usersGroup = new ArrayList<PublicUser>();
+			usersGroup.add(new PublicUser(creatorUser.getId(), creatorUser.getPseudo()));
+			GroupData groupData = new GroupData(groupEntity, usersGroup);
+			return new ResponseEntity<GroupData>(groupData, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -112,7 +116,8 @@ public class GeneralDashboardRestController {
 				userEntity.setPseudo(userNewData.getNewPseudo());
 			}
 			userService.save(userEntity);
-			return new ResponseEntity<>(HttpStatus.OK);
+			PrivateUser privateUser = new PrivateUser(userEntity);
+			return new ResponseEntity<PrivateUser>(privateUser, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);

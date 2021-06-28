@@ -1,10 +1,8 @@
 package fr.eql.ticketing.controller.rest.dto.read;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eql.ticketing.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
