@@ -119,8 +119,8 @@ public class GroupDashboardRestController {
 					throw e;
 				}
 			}
-			return new ResponseEntity<Long>(ticketEntity.getId(), HttpStatus.OK);
-
+			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity);
+			return new ResponseEntity<TicketData>(ticketData, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
