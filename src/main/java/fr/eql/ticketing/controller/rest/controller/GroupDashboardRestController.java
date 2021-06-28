@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import fr.eql.ticketing.controller.rest.dto.create.NewComment;
 import fr.eql.ticketing.controller.rest.dto.create.NewTicket;
 import fr.eql.ticketing.controller.rest.dto.create.UserIdGroupIdForm;
 import fr.eql.ticketing.controller.rest.dto.read.CommentToDisplay;
@@ -85,26 +84,16 @@ public class GroupDashboardRestController {
 			GroupData groupData = new GroupData(group, groupPublicUsers);
 			// Find group's tickets and transform its into TicketData;
 			List<TicketData> groupTickets = group.getTickets().stream().map(ticket -> {
-				// Find ticket history
-				List<StatusData> history = ticket.getStatusHistory().stream()
-						.map(activity -> new StatusData(activity.getStatus().getLabel(), activity.getStatusDate()))
-						.collect(Collectors.toList());
-				// Find users on task
-				List<PublicUser> usersOnTask = ticket.getTasks().stream().map(task -> task.getUser())
-						.map(user -> new PublicUser(user.getId(), user.getPseudo())).collect(Collectors.toList());
-				// Find comments on ticket
-				CommentsToGet commentsToGetTicket = new CommentsToGet(ticket.getId(), EntityType.TICKET.name());
-				List<CommentToDisplay> commentsToDisplayTicket = setUpAndGetCommentsToDisplay(commentsToGetTicket);
-				
-				return new TicketData(ticket, history, usersOnTask, commentsToDisplayTicket);
+				return this.createTicketDataFromTicketEntity(ticket);
 			}).collect(Collectors.toList());
-			
-			//Find Group's comments
+
+			// Find Group's comments
 			CommentsToGet commentsToGetGroup = new CommentsToGet(group.getId(), EntityType.GROUP.name());
 			List<CommentToDisplay> commentsToDisplayGroup = setUpAndGetCommentsToDisplay(commentsToGetGroup);
 
 			// Now we can instantiate GroupDashboardData
-			GroupDashboardData groupDashboardData = new GroupDashboardData(groupData, groupTickets, commentsToDisplayGroup);
+			GroupDashboardData groupDashboardData = new GroupDashboardData(groupData, groupTickets,
+					commentsToDisplayGroup);
 			return new ResponseEntity<GroupDashboardData>(groupDashboardData, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -142,8 +131,8 @@ public class GroupDashboardRestController {
 					throw e;
 				}
 			}
-			return new ResponseEntity<Long>(ticketEntity.getId(), HttpStatus.OK);
-
+			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity);
+			return new ResponseEntity<TicketData>(ticketData, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -153,10 +142,11 @@ public class GroupDashboardRestController {
 	@PostMapping("/update-ticket")
 	public ResponseEntity<?> updateTicket(@RequestBody UpdatedTicket updatedTicket) {
 		try {
-			// TODO: Maybe work with hibernate transaction, because Ticket is modify but if exception is throw when adding status, modifications stayed
+			// TODO: Maybe work with hibernate transaction, because Ticket is modify but if
+			// exception is throw when adding status, modifications stayed
 			// Check if ticket exist
 			Ticket ticketEntity = ticketService.getTicketById(updatedTicket.getTicketId());
-			
+
 			if (ticketEntity == null) {
 				throw new InvalidNewDataPostException(
 						"Ticket with id -" + updatedTicket.getTicketId() + "- doesn't exist.");
@@ -301,8 +291,22 @@ public class GroupDashboardRestController {
 		return userService.getMultipleUsersWithIds(
 				publicUsers.stream().map(publicUser -> publicUser.getId()).collect(Collectors.toList()));
 	}
-	
-	private List<CommentToDisplay> setUpAndGetCommentsToDisplay(CommentsToGet commentsToGet){
+
+	private TicketData createTicketDataFromTicketEntity(Ticket ticket) {
+		// Find ticket history
+		List<StatusData> history = ticket.getStatusHistory().stream()
+				.map(activity -> new StatusData(activity.getStatus().getLabel(), activity.getStatusDate()))
+				.collect(Collectors.toList());
+		// Find users on task
+		List<PublicUser> usersOnTask = ticket.getTasks().stream().map(task -> task.getUser())
+				.map(user -> new PublicUser(user.getId(), user.getPseudo())).collect(Collectors.toList());
+		// Find comments on ticket
+		CommentsToGet commentsToGetTicket = new CommentsToGet(ticket.getId(), EntityType.TICKET.name());
+		List<CommentToDisplay> commentsToDisplayTicket = setUpAndGetCommentsToDisplay(commentsToGetTicket);
+		return new TicketData(ticket, history, usersOnTask, commentsToDisplayTicket);
+	}
+
+	private List<CommentToDisplay> setUpAndGetCommentsToDisplay(CommentsToGet commentsToGet) {
 		String urlWSComment = "http://localhost:8083/api/public/comments";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<CommentsToGet> request = new HttpEntity<>(commentsToGet);
