@@ -11,6 +11,6 @@ public class UpdatedUser {
 	/**
 	 * TODO: rework field login if using spring security
 	 */
-	private String login;
+	private String username;
 	private String oldPassword, newPassword, newPseudo;
 }
