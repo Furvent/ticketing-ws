@@ -66,7 +66,7 @@ public class GeneralDashboardRestController {
 				// Transform this users list into a list of PublicUser
 				groupsData.add(new GroupData(group, usersGroup));
 			});
-			GeneralDashboardData dataToSend = new GeneralDashboardData(userEntity, groupsData);
+			GeneralDashboardData dataToSend = new GeneralDashboardData(groupsData);
 			return new ResponseEntity<GeneralDashboardData>(dataToSend, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
