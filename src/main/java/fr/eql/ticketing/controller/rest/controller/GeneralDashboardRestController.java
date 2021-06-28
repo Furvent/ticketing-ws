@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.eql.ticketing.controller.rest.dto.create.NewGroup;
 import fr.eql.ticketing.controller.rest.dto.read.GeneralDashboardData;
 import fr.eql.ticketing.controller.rest.dto.read.GroupData;
+import fr.eql.ticketing.controller.rest.dto.read.PrivateUser;
 import fr.eql.ticketing.controller.rest.dto.read.PublicUser;
 import fr.eql.ticketing.controller.rest.dto.update.UpdatedUser;
 import fr.eql.ticketing.entity.Group;
@@ -66,7 +67,7 @@ public class GeneralDashboardRestController {
 				// Transform this users list into a list of PublicUser
 				groupsData.add(new GroupData(group, usersGroup));
 			});
-			GeneralDashboardData dataToSend = new GeneralDashboardData(userEntity, groupsData);
+			GeneralDashboardData dataToSend = new GeneralDashboardData(groupsData);
 			return new ResponseEntity<GeneralDashboardData>(dataToSend, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,7 +90,10 @@ public class GeneralDashboardRestController {
 			}
 			Group groupEntity = new Group(newGroup.getName(), creatorUser, LocalDateTime.now());
 			groupService.save(groupEntity);
-			return new ResponseEntity<Long>(groupEntity.getId(), HttpStatus.OK);
+			List<PublicUser> usersGroup = new ArrayList<PublicUser>();
+			usersGroup.add(new PublicUser(creatorUser.getId(), creatorUser.getPseudo()));
+			GroupData groupData = new GroupData(groupEntity, usersGroup);
+			return new ResponseEntity<GroupData>(groupData, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -100,7 +104,7 @@ public class GeneralDashboardRestController {
 	public ResponseEntity<?> updateUserData(@RequestBody UpdatedUser userNewData) {
 		try {
 			// TODO: rework if using spring security. Actually no check on login validity
-			User userEntity = userService.getUserWithUsername(userNewData.getLogin());
+			User userEntity = userService.getUserWithUsername(userNewData.getUsername());
 			if (!userNewData.getNewPassword().isEmpty()) {
 				if (!userNewData.getOldPassword().equals(userEntity.getPassword())) {
 					throw new InvalidNewDataPostException("Old password invalid");
@@ -112,7 +116,8 @@ public class GeneralDashboardRestController {
 				userEntity.setPseudo(userNewData.getNewPseudo());
 			}
 			userService.save(userEntity);
-			return new ResponseEntity<>(HttpStatus.OK);
+			PrivateUser privateUser = new PrivateUser(userEntity);
+			return new ResponseEntity<PrivateUser>(privateUser, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
