@@ -2,9 +2,11 @@ package fr.eql.ticketing.controller.rest.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,9 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import fr.eql.ticketing.controller.rest.dto.create.NewComment;
 import fr.eql.ticketing.controller.rest.dto.create.NewTicket;
 import fr.eql.ticketing.controller.rest.dto.create.UserIdGroupIdForm;
+import fr.eql.ticketing.controller.rest.dto.read.CommentToDisplay;
+import fr.eql.ticketing.controller.rest.dto.read.CommentsToGet;
 import fr.eql.ticketing.controller.rest.dto.read.GroupDashboardData;
 import fr.eql.ticketing.controller.rest.dto.read.GroupData;
 import fr.eql.ticketing.controller.rest.dto.read.PublicUser;
@@ -28,6 +34,7 @@ import fr.eql.ticketing.entity.StatusHistory;
 import fr.eql.ticketing.entity.Task;
 import fr.eql.ticketing.entity.Ticket;
 import fr.eql.ticketing.entity.User;
+import fr.eql.ticketing.enums.EntityType;
 import fr.eql.ticketing.enums.TicketStatus;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
 import fr.eql.ticketing.service.GroupService;
@@ -85,10 +92,19 @@ public class GroupDashboardRestController {
 				// Find users on task
 				List<PublicUser> usersOnTask = ticket.getTasks().stream().map(task -> task.getUser())
 						.map(user -> new PublicUser(user.getId(), user.getPseudo())).collect(Collectors.toList());
-				return new TicketData(ticket, history, usersOnTask);
+				// Find comments on ticket
+				CommentsToGet commentsToGetTicket = new CommentsToGet(ticket.getId(), EntityType.TICKET.name());
+				List<CommentToDisplay> commentsToDisplayTicket = setUpAndGetCommentsToDisplay(commentsToGetTicket);
+				
+				return new TicketData(ticket, history, usersOnTask, commentsToDisplayTicket);
 			}).collect(Collectors.toList());
+			
+			//Find Group's comments
+			CommentsToGet commentsToGetGroup = new CommentsToGet(group.getId(), EntityType.GROUP.name());
+			List<CommentToDisplay> commentsToDisplayGroup = setUpAndGetCommentsToDisplay(commentsToGetGroup);
+
 			// Now we can instantiate GroupDashboardData
-			GroupDashboardData groupDashboardData = new GroupDashboardData(groupData, groupTickets);
+			GroupDashboardData groupDashboardData = new GroupDashboardData(groupData, groupTickets, commentsToDisplayGroup);
 			return new ResponseEntity<GroupDashboardData>(groupDashboardData, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -284,6 +300,15 @@ public class GroupDashboardRestController {
 	private List<User> getUsersFromPublicUsers(List<PublicUser> publicUsers) {
 		return userService.getMultipleUsersWithIds(
 				publicUsers.stream().map(publicUser -> publicUser.getId()).collect(Collectors.toList()));
+	}
+	
+	private List<CommentToDisplay> setUpAndGetCommentsToDisplay(CommentsToGet commentsToGet){
+		String urlWSComment = "http://localhost:8083/api/public/comments";
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<CommentsToGet> request = new HttpEntity<>(commentsToGet);
+		CommentToDisplay[] preResult = restTemplate.postForObject(urlWSComment, request, CommentToDisplay[].class);
+		List<CommentToDisplay> result = new ArrayList<CommentToDisplay>(Arrays.asList(preResult));
+		return result;
 	}
 
 }

@@ -34,9 +34,6 @@ public class Ticket {
 	@OneToMany(mappedBy = "ticket")
 	private Set<Task> tasks = new HashSet<Task>();
 
-	@OneToMany(mappedBy = "ticket")
-	private Set<Comment> comment = new HashSet<Comment>();
-
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Group group;

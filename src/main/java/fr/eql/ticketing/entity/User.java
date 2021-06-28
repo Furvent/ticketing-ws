@@ -34,9 +34,6 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private Set<Membership> memberships = new HashSet<Membership>();
 
-	@OneToMany(mappedBy = "user")
-	private Set<Comment> comment = new HashSet<Comment>();
-
 	public User() {
 	}
 
