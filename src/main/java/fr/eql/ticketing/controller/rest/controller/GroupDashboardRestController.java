@@ -78,14 +78,7 @@ public class GroupDashboardRestController {
 			GroupData groupData = new GroupData(group, groupPublicUsers);
 			// Find group's tickets and transform its into TicketData;
 			List<TicketData> groupTickets = group.getTickets().stream().map(ticket -> {
-				// Find ticket history
-				List<StatusData> history = ticket.getStatusHistory().stream()
-						.map(activity -> new StatusData(activity.getStatus().getLabel(), activity.getStatusDate()))
-						.collect(Collectors.toList());
-				// Find users on task
-				List<PublicUser> usersOnTask = ticket.getTasks().stream().map(task -> task.getUser())
-						.map(user -> new PublicUser(user.getId(), user.getPseudo())).collect(Collectors.toList());
-				return new TicketData(ticket, history, usersOnTask);
+				return this.createTicketDataFromTicketEntity(ticket);
 			}).collect(Collectors.toList());
 			// Now we can instantiate GroupDashboardData
 			GroupDashboardData groupDashboardData = new GroupDashboardData(groupData, groupTickets);
@@ -137,10 +130,11 @@ public class GroupDashboardRestController {
 	@PostMapping("/update-ticket")
 	public ResponseEntity<?> updateTicket(@RequestBody UpdatedTicket updatedTicket) {
 		try {
-			// TODO: Maybe work with hibernate transaction, because Ticket is modify but if exception is throw when adding status, modifications stayed
+			// TODO: Maybe work with hibernate transaction, because Ticket is modify but if
+			// exception is throw when adding status, modifications stayed
 			// Check if ticket exist
 			Ticket ticketEntity = ticketService.getTicketById(updatedTicket.getTicketId());
-			
+
 			if (ticketEntity == null) {
 				throw new InvalidNewDataPostException(
 						"Ticket with id -" + updatedTicket.getTicketId() + "- doesn't exist.");
@@ -284,6 +278,17 @@ public class GroupDashboardRestController {
 	private List<User> getUsersFromPublicUsers(List<PublicUser> publicUsers) {
 		return userService.getMultipleUsersWithIds(
 				publicUsers.stream().map(publicUser -> publicUser.getId()).collect(Collectors.toList()));
+	}
+
+	private TicketData createTicketDataFromTicketEntity(Ticket ticket) {
+		// Find ticket history
+		List<StatusData> history = ticket.getStatusHistory().stream()
+				.map(activity -> new StatusData(activity.getStatus().getLabel(), activity.getStatusDate()))
+				.collect(Collectors.toList());
+		// Find users on task
+		List<PublicUser> usersOnTask = ticket.getTasks().stream().map(task -> task.getUser())
+				.map(user -> new PublicUser(user.getId(), user.getPseudo())).collect(Collectors.toList());
+		return new TicketData(ticket, history, usersOnTask);
 	}
 
 }
