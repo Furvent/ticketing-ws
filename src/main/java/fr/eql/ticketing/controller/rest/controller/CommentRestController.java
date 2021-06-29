@@ -53,6 +53,10 @@ public class CommentRestController {
 	public ResponseEntity<?> createGroupComment(@RequestBody NewComment newComment) {
 		try {
 			dataCheck(newComment);
+			
+			if (!(newComment.getEntityType() == null) && !newComment.getEntityType().equals(EntityType.GROUP.name())) {
+				throw new InvalidNewDataPostException("The entity type invalid for this request");
+			}
 
 			String url = urlWSComment + "public/create";
 			newComment.setEntityType(EntityType.GROUP.name());
