@@ -1,9 +1,5 @@
 package fr.eql.ticketing.controller.rest.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
 import fr.eql.ticketing.controller.rest.dto.create.NewComment;
-import fr.eql.ticketing.controller.rest.dto.read.CommentToDisplay;
-import fr.eql.ticketing.controller.rest.dto.read.CommentsToGet;
 import fr.eql.ticketing.enums.EntityType;
+import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
 
 @RestController
 @CrossOrigin(origins = "*")
