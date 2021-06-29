@@ -1,5 +1,6 @@
 package fr.eql.ticketing.controller.rest.dto.read;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +25,13 @@ public class GroupData {
 	private long id, creatorId;
 	private String name;
 	private List<PublicUser> users = new ArrayList<PublicUser>();
+	private LocalDateTime creationDateGroup;
 
 	public GroupData(Group group, List<PublicUser> users) {
 		this.id = group.getId();
 		this.creatorId = group.getCreatedBy().getId();
 		this.name = group.getName();
+		this.creationDateGroup = group.getCreationDateGroup();
 		this.users = users;
 	}
 

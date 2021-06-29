@@ -88,8 +88,11 @@ public class GeneralDashboardRestController {
 			if (creatorUser == null) {
 				throw new InvalidNewDataPostException("Group creator's id doesn't exist");
 			}
-			Group groupEntity = new Group(newGroup.getName(), creatorUser, LocalDateTime.now());
+			LocalDateTime now = LocalDateTime.now();
+			Group groupEntity = new Group(newGroup.getName(), creatorUser, now);
+			// Create membership with creator user
 			groupService.save(groupEntity);
+			membershipService.save(new Membership(creatorUser, groupEntity, now));
 			List<PublicUser> usersGroup = new ArrayList<PublicUser>();
 			usersGroup.add(new PublicUser(creatorUser.getId(), creatorUser.getPseudo()));
 			GroupData groupData = new GroupData(groupEntity, usersGroup);
