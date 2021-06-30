@@ -1,4 +1,4 @@
-package fr.eql.ticketing.controller.rest.dto.read;
+package fr.eql.ticketing.restController.dto.read;
 
 import java.time.LocalDateTime;
 

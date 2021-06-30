@@ -1,4 +1,4 @@
-package fr.eql.ticketing.controller.rest.dto.update;
+package fr.eql.ticketing.restController.dto.update;
 
 import lombok.Getter;
 import lombok.Setter;

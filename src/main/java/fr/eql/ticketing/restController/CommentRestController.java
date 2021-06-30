@@ -1,4 +1,4 @@
-package fr.eql.ticketing.controller.rest.controller;
+package fr.eql.ticketing.restController;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import fr.eql.ticketing.controller.rest.dto.create.NewComment;
 import fr.eql.ticketing.enums.EntityType;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
+import fr.eql.ticketing.restController.dto.create.NewComment;
 
 @RestController
 @CrossOrigin(origins = "*")

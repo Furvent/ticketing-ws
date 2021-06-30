@@ -1,4 +1,4 @@
-package fr.eql.ticketing.controller.rest.controller;
+package fr.eql.ticketing.restController;
 
 import java.time.LocalDateTime;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.eql.ticketing.controller.rest.dto.create.LoginForm;
-import fr.eql.ticketing.controller.rest.dto.create.NewUser;
-import fr.eql.ticketing.controller.rest.dto.read.PrivateUser;
 import fr.eql.ticketing.entity.User;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
+import fr.eql.ticketing.restController.dto.create.LoginForm;
+import fr.eql.ticketing.restController.dto.create.NewUser;
+import fr.eql.ticketing.restController.dto.read.PrivateUser;
 import fr.eql.ticketing.service.UserService;
 
 @RestController

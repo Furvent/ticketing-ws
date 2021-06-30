@@ -1,4 +1,4 @@
-package fr.eql.ticketing.controller.rest.controller;
+package fr.eql.ticketing.restController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.eql.ticketing.controller.rest.dto.create.NewGroup;
-import fr.eql.ticketing.controller.rest.dto.read.GeneralDashboardData;
-import fr.eql.ticketing.controller.rest.dto.read.GroupData;
-import fr.eql.ticketing.controller.rest.dto.read.PrivateUser;
-import fr.eql.ticketing.controller.rest.dto.read.PublicUser;
-import fr.eql.ticketing.controller.rest.dto.update.UpdatedUser;
 import fr.eql.ticketing.entity.Group;
 import fr.eql.ticketing.entity.Membership;
 import fr.eql.ticketing.entity.User;
 import fr.eql.ticketing.exception.restController.EntityNotFoundException;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
+import fr.eql.ticketing.restController.dto.create.NewGroup;
+import fr.eql.ticketing.restController.dto.read.GeneralDashboardData;
+import fr.eql.ticketing.restController.dto.read.GroupData;
+import fr.eql.ticketing.restController.dto.read.PrivateUser;
+import fr.eql.ticketing.restController.dto.read.PublicUser;
+import fr.eql.ticketing.restController.dto.update.UpdatedUser;
 import fr.eql.ticketing.service.GroupService;
 import fr.eql.ticketing.service.MembershipService;
 import fr.eql.ticketing.service.UserService;
