@@ -23,4 +23,11 @@ public class PrivateUser {
 		this.creationAccountDate = user.getCreationAccountDate();
 	}
 
+	public PrivateUser() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
 }
