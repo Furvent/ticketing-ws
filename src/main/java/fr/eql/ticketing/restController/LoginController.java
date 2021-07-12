@@ -1,6 +1,7 @@
 package fr.eql.ticketing.restController;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class LoginController {
 				throw new InvalidNewDataPostException("Can't create new user because pseudo is empty");
 			}
 			// If code reaches here, we can save new user
-			User newUserEntity = new User(newUser.getUsername(), newUser.getPassword(), newUser.getPseudo(), LocalDateTime.now());
+			User newUserEntity = new User(UUID.randomUUID().toString(), newUser.getUsername(), newUser.getPassword(), newUser.getPseudo(), LocalDateTime.now());
 			userService.save(newUserEntity);
 			PrivateUser privateUser = new PrivateUser(newUserEntity);
 			return new ResponseEntity<PrivateUser>(privateUser, HttpStatus.OK);

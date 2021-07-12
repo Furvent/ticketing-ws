@@ -1,6 +1,7 @@
 package fr.eql.ticketing.init;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -50,17 +51,17 @@ public class InitDataSet {
 	@PostConstruct
 	public void initDemoData() {
 		//ajout des utilisateurs lambdas
-		User mimi = new User("mimi", "pwdMimi", "mimi92", LocalDateTime.of(2021, 4, 10, 10, 10));
-		User matteo = new User("matteo", "pwdMatteo", "matteo le dev", LocalDateTime.of(2021, 4, 10, 12, 10));
-		User myriam = new User("myriam", "pwdMyriam", "devMy75", LocalDateTime.of(2021, 4, 10, 14, 10));
-		User paul = new User("paul", "pwdPaul", "paul_Celton", LocalDateTime.of(2021, 3, 02, 12, 10));
-		User nana = new User("nana", "pwdNana", "nana_traore", LocalDateTime.of(2021, 3, 10, 10, 10));
-		User rafael = new User("rafael", "pwdrafael", "rafaelEql", LocalDateTime.now());
-		User florentine = new User("florentine", "pwdFlorentine", "floflo", LocalDateTime.now());
-		User maxime = new User("maxime", "pwdMaxime", "maxime1977", LocalDateTime.now());
-		User marie = new User("marie", "pwdMarie", "marie", LocalDateTime.now());
-		User mohamed = new User("mohamed", "pwdMohamed", "mohamed12", LocalDateTime.now());
-		User yasmine = new User("yasmine", "pwdYasmine", "yasmine_pro", LocalDateTime.now());
+		User mimi = new User(UUID.randomUUID().toString(), "mimi", "pwdMimi", "mimi92", LocalDateTime.of(2021, 4, 10, 10, 10));
+		User matteo = new User(UUID.randomUUID().toString(), "matteo", "pwdMatteo", "matteo le dev", LocalDateTime.of(2021, 4, 10, 12, 10));
+		User myriam = new User(UUID.randomUUID().toString(), "myriam", "pwdMyriam", "devMy75", LocalDateTime.of(2021, 4, 10, 14, 10));
+		User paul = new User(UUID.randomUUID().toString(), "paul", "pwdPaul", "paul_Celton", LocalDateTime.of(2021, 3, 02, 12, 10));
+		User nana = new User(UUID.randomUUID().toString(), "nana", "pwdNana", "nana_traore", LocalDateTime.of(2021, 3, 10, 10, 10));
+		User rafael = new User(UUID.randomUUID().toString(), "rafael", "pwdrafael", "rafaelEql", LocalDateTime.now());
+		User florentine = new User(UUID.randomUUID().toString(), "florentine", "pwdFlorentine", "floflo", LocalDateTime.now());
+		User maxime = new User(UUID.randomUUID().toString(), "maxime", "pwdMaxime", "maxime1977", LocalDateTime.now());
+		User marie = new User(UUID.randomUUID().toString(), "marie", "pwdMarie", "marie", LocalDateTime.now());
+		User mohamed = new User(UUID.randomUUID().toString(), "mohamed", "pwdMohamed", "mohamed12", LocalDateTime.now());
+		User yasmine = new User(UUID.randomUUID().toString(), "yasmine", "pwdYasmine", "yasmine_pro", LocalDateTime.now());
 		userService.save(mimi);
 		userService.save(matteo);
 		userService.save(myriam);
@@ -79,14 +80,14 @@ public class InitDataSet {
 		//un groupe de copains dev avec mimi comme admin et matteo/myriam comme users
 		//un groupe qui organise un évènement mondain avec paul comme admin et nana comme user.
 		
-		Group devGroup = new Group("Ticketing App", mimi, LocalDateTime.of(2021, 04, 11, 10, 15));
+		Group devGroup = new Group(UUID.randomUUID().toString(), "Ticketing App", mimi, LocalDateTime.of(2021, 04, 11, 10, 15));
 		groupService.save(devGroup);
 		//Membership membership1ToGroup1 = new Membership(user1, group1, LocalDateTime.of(2021, 1, 11, 10, 15));
 		createMembership(mimi, devGroup, LocalDateTime.of(2021, 04, 11, 10, 15));
 		createMembership(matteo, devGroup, LocalDateTime.of(2021, 05, 05, 12, 15));
 		createMembership(myriam, devGroup, LocalDateTime.of(2021, 05, 05, 12, 15));
 		
-		Group eventGroup = new Group("Préparation Mariage", paul, LocalDateTime.of(2021, 3, 02, 12, 12));
+		Group eventGroup = new Group(UUID.randomUUID().toString(), "Préparation Mariage", paul, LocalDateTime.of(2021, 3, 02, 12, 12));
 		groupService.save(eventGroup);
 		createMembership(paul, eventGroup, LocalDateTime.of(2021, 3, 02, 12, 12));
 		createMembership(nana, eventGroup, LocalDateTime.of(2021, 3, 03, 18, 20));
@@ -108,7 +109,7 @@ public class InitDataSet {
 		 * date min LocalDateTime.of(2021, 4, 11, 14, 10));
 		***************************************** */
 		//First 3, going until Closed
-		Ticket ticketInfos = new Ticket("Gather information about already existing"
+		Ticket ticketInfos = new Ticket(UUID.randomUUID().toString(), "Gather information about already existing"
 				+ "ticketing apps", "Gather infos about other apps", devGroup);
 		ticketService.save(ticketInfos);
 		addStatusHistory(ticketInfos, statusOpened, LocalDateTime.of(2021, 4, 14, 15, 10));
@@ -116,7 +117,7 @@ public class InitDataSet {
 		addStatusHistory(ticketInfos, statusDone, LocalDateTime.of(2021, 4, 15, 15, 10));
 		addStatusHistory(ticketInfos, statusClosed, LocalDateTime.of(2021, 4, 15, 16, 10));
 		
-		Ticket ticketDataModel = new Ticket("Prepare the database model for our "
+		Ticket ticketDataModel = new Ticket(UUID.randomUUID().toString(), "Prepare the database model for our "
 				+ "ticketing apps", "Prepare the database", devGroup);
 		ticketService.save(ticketDataModel);
 		addStatusHistory(ticketDataModel, statusOpened, LocalDateTime.of(2021, 4, 14, 15, 15));
@@ -125,7 +126,7 @@ public class InitDataSet {
 		addStatusHistory(ticketDataModel, statusDone, LocalDateTime.of(2021, 05, 17, 15, 10));
 		addStatusHistory(ticketDataModel, statusClosed, LocalDateTime.of(2021, 05, 18, 15, 10));
 
-		Ticket ticketComm = new Ticket("Prepare a discord and drive to share data", "Setup sharing tools", devGroup);
+		Ticket ticketComm = new Ticket(UUID.randomUUID().toString(), "Prepare a discord and drive to share data", "Setup sharing tools", devGroup);
 		ticketService.save(ticketComm);
 		addStatusHistory(ticketComm, statusOpened, LocalDateTime.of(2021, 04, 14, 15, 20));
 		addTaskBetweenUserAndTicket(matteo, ticketComm, statusAllocated, LocalDateTime.of(2021, 05, 15, 16, 10));
@@ -135,13 +136,13 @@ public class InitDataSet {
 		
 		
 		//next two in done
-		Ticket ticketBack = new Ticket("Program and implement the back-end", "Code the back", devGroup);
+		Ticket ticketBack = new Ticket(UUID.randomUUID().toString(), "Program and implement the back-end", "Code the back", devGroup);
 		ticketService.save(ticketBack);
 		addStatusHistory(ticketBack, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		addTaskBetweenUserAndTicket(matteo, ticketBack, statusAllocated, LocalDateTime.of(2021, 05, 14, 19, 25));
 		addStatusHistory(ticketBack, statusDone, LocalDateTime.of(2021, 05, 17, 15, 10));
 		
-		Ticket ticketDemo = new Ticket("Prepare a scenario to be used in a demo", "Prepare a demo", devGroup);
+		Ticket ticketDemo = new Ticket(UUID.randomUUID().toString(), "Prepare a scenario to be used in a demo", "Prepare a demo", devGroup);
 		ticketService.save(ticketDemo);
 		addStatusHistory(ticketDemo, statusAllocated, LocalDateTime.of(2021, 05, 16, 15, 10));
 		addTaskBetweenUserAndTicket(myriam, ticketDemo, statusAllocated, LocalDateTime.of(2021, 05, 16, 18, 10));
@@ -149,22 +150,22 @@ public class InitDataSet {
 		
 		
 		//next two in Allocated
-		Ticket ticketFront = new Ticket("Program and implement the front-end", "Code the front", devGroup);
+		Ticket ticketFront = new Ticket(UUID.randomUUID().toString(), "Program and implement the front-end", "Code the front", devGroup);
 		ticketService.save(ticketFront);
 		addStatusHistory(ticketFront, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		addTaskBetweenUserAndTicket(mimi, ticketFront, statusAllocated, LocalDateTime.of(2021, 05, 18, 19, 25));
 		
-		Ticket ticketHost = new Ticket("Find an hosting service", "Find a hosting service", devGroup);
+		Ticket ticketHost = new Ticket(UUID.randomUUID().toString(), "Find an hosting service", "Find a hosting service", devGroup);
 		ticketService.save(ticketHost);
 		addStatusHistory(ticketHost, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		addTaskBetweenUserAndTicket(myriam, ticketHost, statusAllocated, LocalDateTime.of(2021, 05, 16, 19, 25));
 		
 		//next two in Opened
-		Ticket ticketPopulate = new Ticket("Populate the database", "Populate the database", devGroup);
+		Ticket ticketPopulate = new Ticket(UUID.randomUUID().toString(), "Populate the database", "Populate the database", devGroup);
 		ticketService.save(ticketPopulate);
 		addStatusHistory(ticketPopulate, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		
-		Ticket ticketCloud = new Ticket("Push the app in the clouds", "PrepareCloud", devGroup);
+		Ticket ticketCloud = new Ticket(UUID.randomUUID().toString(), "Push the app in the clouds", "PrepareCloud", devGroup);
 		ticketService.save(ticketCloud);
 		addStatusHistory(ticketCloud, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		
@@ -179,7 +180,7 @@ public class InitDataSet {
 		
 		
 		//Closed
-		Ticket ticketDate = new Ticket("Fixer la date de marriage", "Fixer la date", eventGroup);
+		Ticket ticketDate = new Ticket(UUID.randomUUID().toString(), "Fixer la date de marriage", "Fixer la date", eventGroup);
 		ticketService.save(ticketDate);
 		addStatusHistory(ticketDate, statusOpened, LocalDateTime.of(2021, 03, 12, 18, 20));
 		addTaskBetweenUserAndTicket(paul, ticketDate, statusAllocated, LocalDateTime.of(2021, 03, 12, 19, 20));
@@ -190,7 +191,7 @@ public class InitDataSet {
 		//find florinst, caterer, decoration, sitting arrangements 
 		
 		//Deux suivants en done
-		Ticket ticketVenue = new Ticket("Trouver et réserver un lieu pour organiser le mariage", "Trouver lieu de mariage", eventGroup);
+		Ticket ticketVenue = new Ticket(UUID.randomUUID().toString(), "Trouver et réserver un lieu pour organiser le mariage", "Trouver lieu de mariage", eventGroup);
 		ticketService.save(ticketVenue);
 		addStatusHistory(ticketVenue, statusOpened, LocalDateTime.of(2021, 03, 16, 18, 20));
 		addTaskBetweenUserAndTicket(paul, ticketVenue, statusAllocated, LocalDateTime.of(2021, 03, 17, 18, 20));
@@ -198,7 +199,7 @@ public class InitDataSet {
 		addStatusHistory(ticketVenue, statusDone, LocalDateTime.of(2021, 03, 30, 18, 20));
 		
 		
-		Ticket ticketCaterer = new Ticket("Trouver un traiteur pour le marriage vers les dates", "Trouver un traiteur", eventGroup);
+		Ticket ticketCaterer = new Ticket(UUID.randomUUID().toString(), "Trouver un traiteur pour le marriage vers les dates", "Trouver un traiteur", eventGroup);
 		ticketService.save(ticketCaterer);
 		addStatusHistory(ticketCaterer, statusOpened, LocalDateTime.of(2021, 03, 20, 18, 20));
 		addTaskBetweenUserAndTicket(nana, ticketCaterer, statusAllocated, LocalDateTime.of(2021, 03, 21, 18, 20));
@@ -206,23 +207,23 @@ public class InitDataSet {
 		
 		//Next two allocated
 		
-		Ticket ticketInvite = new Ticket("Préparer et envoyer les invitations", "Faire les invitations", eventGroup);
+		Ticket ticketInvite = new Ticket(UUID.randomUUID().toString(), "Préparer et envoyer les invitations", "Faire les invitations", eventGroup);
 		ticketService.save(ticketInvite);
 		addStatusHistory(ticketInvite, statusOpened, LocalDateTime.of(2021, 04, 01, 18, 20));
 		addTaskBetweenUserAndTicket(paul, ticketInvite, statusAllocated, LocalDateTime.of(2021, 04, 01, 20, 20));
 		
-		Ticket ticketMusician = new Ticket("Trouver et réserver des musiciens pour le mariage", "Réserver des musiciens", eventGroup);
+		Ticket ticketMusician = new Ticket(UUID.randomUUID().toString(), "Trouver et réserver des musiciens pour le mariage", "Réserver des musiciens", eventGroup);
 		ticketService.save(ticketMusician);
 		addStatusHistory(ticketMusician, statusOpened, LocalDateTime.of(2021, 04, 01, 19, 20));
 		addTaskBetweenUserAndTicket(nana, ticketMusician, statusAllocated, LocalDateTime.of(2021, 04, 02, 18, 20));
 		
 
 		//Next two opened
-		Ticket ticketHelp = new Ticket("Inviter d'autres personnes pour aider à la préparation du mariage", "Chercher de l'aide pour l'organisation", eventGroup);
+		Ticket ticketHelp = new Ticket(UUID.randomUUID().toString(), "Inviter d'autres personnes pour aider à la préparation du mariage", "Chercher de l'aide pour l'organisation", eventGroup);
 		ticketService.save(ticketHelp);
 		addStatusHistory(ticketHelp, statusOpened, LocalDateTime.of(2021, 04, 03, 18, 20));
 		
-		Ticket ticketDeco = new Ticket("Trouver et réserver un décorateur qui sait faire du rococo pour le mariage", "Réserver un décorateur", eventGroup);
+		Ticket ticketDeco = new Ticket(UUID.randomUUID().toString(), "Trouver et réserver un décorateur qui sait faire du rococo pour le mariage", "Réserver un décorateur", eventGroup);
 		ticketService.save(ticketDeco);
 		addStatusHistory(ticketDeco, statusOpened, LocalDateTime.of(2021, 04, 05, 19, 20));
 		

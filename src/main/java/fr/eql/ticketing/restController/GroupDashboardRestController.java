@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpEntity;
@@ -117,7 +118,7 @@ public class GroupDashboardRestController {
 			}
 			Group ticketGroup = groupService.getGroupById(newTicket.getGroupId());
 			// Add ticket and if user is on task, add relation
-			Ticket ticketEntity = new Ticket(newTicket.getDescription(), newTicket.getTitle(), ticketGroup);
+			Ticket ticketEntity = new Ticket(UUID.randomUUID().toString(), newTicket.getDescription(), newTicket.getTitle(), ticketGroup);
 			// We save ticket to get id
 			ticketService.save(ticketEntity);
 			// If user on task

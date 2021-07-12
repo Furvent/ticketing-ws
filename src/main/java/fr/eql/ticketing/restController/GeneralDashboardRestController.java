@@ -3,6 +3,7 @@ package fr.eql.ticketing.restController;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -89,7 +90,7 @@ public class GeneralDashboardRestController {
 				throw new InvalidNewDataPostException("Group creator's id doesn't exist");
 			}
 			LocalDateTime now = LocalDateTime.now();
-			Group groupEntity = new Group(newGroup.getName(), creatorUser, now);
+			Group groupEntity = new Group(UUID.randomUUID().toString(), newGroup.getName(), creatorUser, now);
 			// Create membership with creator user
 			groupService.save(groupEntity);
 			membershipService.save(new Membership(creatorUser, groupEntity, now));
