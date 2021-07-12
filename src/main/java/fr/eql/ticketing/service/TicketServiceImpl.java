@@ -21,8 +21,14 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public Ticket getTicketById(Long ticketId) {
+	public Ticket getTicketWithId(Long ticketId) {
 		Optional<Ticket> ticket = repository.findById(ticketId);
+		return ticket.isPresent() ? ticket.get() : null;
+	}
+	
+	@Override
+	public Ticket getTicketWithPublicId(String publicId) {
+		Optional<Ticket> ticket = repository.findByPublicId(publicId);
 		return ticket.isPresent() ? ticket.get() : null;
 	}
 

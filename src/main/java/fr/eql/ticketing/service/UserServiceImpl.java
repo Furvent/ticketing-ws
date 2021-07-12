@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user = repository.findByUsernameAndPassword(username, password);
 		return user.isPresent() ? user.get() : null;
 	}
+	
+	@Override
+	public User getUserWithPublicId(String publicId) {
+		Optional<User> user = repository.findByPublicId(publicId);
+		return user.isPresent() ? user.get() : null;
+	}
 
 	@Override
 	public boolean checkIfUserExistWithThisUsername(String username) {

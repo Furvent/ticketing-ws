@@ -21,13 +21,20 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public Group getGroupById(Long groupId) {
+	public Group getGroupWithId(Long groupId) {
 		Optional<Group> group = repository.findById(groupId);
+		return group.isPresent() ? group.get() : null;
+	}
+	
+	@Override
+	public Group getGroupWithPublicId(String publicId) {
+		Optional<Group> group = repository.findByPublicId(publicId);
 		return group.isPresent() ? group.get() : null;
 	}
 
 	@Override
-	public boolean checkIfGroupExistWithThisId(long id) {
+	public boolean checkIfGroupExistsWithThisId(long id) {
 		return repository.existsById(id);
 	}
+	
 }

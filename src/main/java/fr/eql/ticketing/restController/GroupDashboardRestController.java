@@ -73,7 +73,7 @@ public class GroupDashboardRestController {
 	public ResponseEntity<?> getGroupDashboardData(@RequestBody long groupId) {
 		try {
 			// Check if group exist with id sent
-			Group group = groupService.getGroupById(groupId);
+			Group group = groupService.getGroupWithId(groupId);
 			if (group == null) {
 				throw new InvalidNewDataPostException("No group with id: " + groupId);
 			}
@@ -113,10 +113,10 @@ public class GroupDashboardRestController {
 			if (newTicket.getDescription().isEmpty()) {
 				throw new InvalidNewDataPostException("New ticket's description cannot be empty");
 			}
-			if (!groupService.checkIfGroupExistWithThisId(newTicket.getGroupId())) {
+			if (!groupService.checkIfGroupExistsWithThisId(newTicket.getGroupId())) {
 				throw new InvalidNewDataPostException("Invalid group id");
 			}
-			Group ticketGroup = groupService.getGroupById(newTicket.getGroupId());
+			Group ticketGroup = groupService.getGroupWithId(newTicket.getGroupId());
 			// Add ticket and if user is on task, add relation
 			Ticket ticketEntity = new Ticket(UUID.randomUUID().toString(), newTicket.getDescription(), newTicket.getTitle(), ticketGroup);
 			// We save ticket to get id
@@ -137,7 +137,7 @@ public class GroupDashboardRestController {
 			StatusHistory statusHistoryEntity = new StatusHistory(statusOpened, ticketEntity, LocalDateTime.now());
 			statusHistoryService.save(statusHistoryEntity);
 			// TODO: handle problem, in the TicketData send back, there is no history or users on task
-			Ticket ticketEntity2 = ticketService.getTicketById(ticketEntity.getId());
+			Ticket ticketEntity2 = ticketService.getTicketWithId(ticketEntity.getId());
 			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity2);
 			return new ResponseEntity<TicketData>(ticketData, HttpStatus.OK);
 		} catch (Exception e) {
@@ -152,7 +152,7 @@ public class GroupDashboardRestController {
 			// TODO: Maybe work with hibernate transaction, because Ticket is modify but if
 			// exception is throw when adding status, modifications stayed
 			// Check if ticket exist
-			Ticket ticketEntity = ticketService.getTicketById(updatedTicket.getTicketId());
+			Ticket ticketEntity = ticketService.getTicketWithId(updatedTicket.getTicketId());
 
 			if (ticketEntity == null) {
 				throw new InvalidNewDataPostException(
@@ -188,7 +188,7 @@ public class GroupDashboardRestController {
 	public ResponseEntity<?> addUserToGroup(@RequestBody UserIdGroupIdForm userIdGroupIdForm) {
 		try {
 			// Check if group exist
-			Group groupEntity = groupService.getGroupById(userIdGroupIdForm.getGroupId());
+			Group groupEntity = groupService.getGroupWithId(userIdGroupIdForm.getGroupId());
 			if (groupEntity == null) {
 				throw new InvalidNewDataPostException(
 						"Group with id -" + userIdGroupIdForm.getGroupId() + "- doesn't exist.");

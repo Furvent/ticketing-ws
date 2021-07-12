@@ -12,6 +12,8 @@ public interface UserService {
 	public User getUserWithUsername(String username);
 
 	public User getUserWithUsernameAndPassword(String username, String password);
+	
+	public User getUserWithPublicId(String publicId);
 
 	public boolean checkIfUserExistWithThisUsername(String username);
 
