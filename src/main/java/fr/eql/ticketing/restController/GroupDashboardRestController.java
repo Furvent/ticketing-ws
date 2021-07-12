@@ -131,7 +131,13 @@ public class GroupDashboardRestController {
 					throw e;
 				}
 			}
-			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity);
+			// Add Status history for creation
+			Status statusOpened = statusService.getStatusByLabel(TicketStatus.OPENED);
+			StatusHistory statusHistoryEntity = new StatusHistory(statusOpened, ticketEntity, LocalDateTime.now());
+			statusHistoryService.save(statusHistoryEntity);
+			// TODO: handle problem, in the TicketData send back, there is no history or users on task
+			Ticket ticketEntity2 = ticketService.getTicketById(ticketEntity.getId());
+			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity2);
 			return new ResponseEntity<TicketData>(ticketData, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -244,7 +250,7 @@ public class GroupDashboardRestController {
 		// TODO: Check if last status in history is the same of the new label status
 		if (this.isStatusLabelValidWhenUpdatingTicket(statusLabel)) {
 			Status status = statusService.getStatusByLabel(statusLabel);
-			StatusHistory statusHistory = new StatusHistory(status, ticket, LocalDateTime.now());
+			StatusHistory statusHistory = new StatusHistory(status, ticket, LocalDateTime.now().plusSeconds(2));
 			statusHistoryService.save(statusHistory);
 		} else {
 			throw new InvalidNewDataPostException("Cannot add status -" + statusLabel + "- on a ticket updated");
@@ -264,17 +270,23 @@ public class GroupDashboardRestController {
 
 	private void addTaskAndHistoryOnTicketWithPublicUsers(Ticket ticket, List<PublicUser> publicUsers)
 			throws InvalidNewDataPostException {
-		// Get all users entities from the list of public users
-		List<User> usersEntitiesOnTask = this.getUsersFromPublicUsers(publicUsers);
+		// Get all users entities from the list of public users collected in request
+		List<User> usersOnTaskCollected = this.getUsersFromPublicUsers(publicUsers);
 		// If missing user entity, throws exception
-		if (usersEntitiesOnTask.size() != publicUsers.size()) {
+		if (usersOnTaskCollected.size() != publicUsers.size()) {
 			throw new InvalidNewDataPostException("Cannot found users entities to add them on task");
 		}
-		// For each user entity, add a task and add a new status on the ticket
+		// Users already on task
+		List<User> usersAlreadyOnTask = ticket.getTasks().stream().map(task -> task.getUser()).collect(Collectors.toList());
+		// Create a list with only new users to add on task
+		List<User> usersToAddOnTask = usersOnTaskCollected.stream().filter(userCollected -> {
+			return !usersAlreadyOnTask.contains(userCollected);
+		}).collect(Collectors.toList());
+		// For each user to add, add a task and add a new status on the ticket
 		List<Task> tasks = new ArrayList<Task>();
 		List<StatusHistory> history = new ArrayList<StatusHistory>();
-		usersEntitiesOnTask.forEach(userOnTask -> {
-			LocalDateTime now = LocalDateTime.now();
+		usersToAddOnTask.forEach(userOnTask -> {
+			LocalDateTime now = LocalDateTime.now().plusSeconds(1);
 			// Create task
 			Task task = new Task(userOnTask, ticket, now);
 			tasks.add(task);
