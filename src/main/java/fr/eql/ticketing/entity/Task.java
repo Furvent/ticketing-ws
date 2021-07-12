@@ -32,12 +32,6 @@ public class Task {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Ticket ticket;
-
-	public Task(LocalDateTime userAddedDate, User user) {
-		super();
-		this.userAddedDate = userAddedDate;
-		this.user = user;
-	}
 	
 	public Task(User user, Ticket ticket, LocalDateTime userAddedDate) {
 		this.user = user;

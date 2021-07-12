@@ -22,6 +22,9 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(unique = true)
+	private String publicId;
 
 	private String title;
 
@@ -41,13 +44,14 @@ public class Ticket {
 	public Ticket() {
 	}
 
-	public Ticket(String details, String title) {
+	public Ticket(String publicId, String details, String title) {
+		this.publicId = publicId;
 		this.description = details;
 		this.title = title;
 	}
 
-	public Ticket(String details, String title, Group group) {
-		this(details, title);
+	public Ticket(String publicId, String details, String title, Group group) {
+		this(publicId, details, title);
 		this.group = group;
 	}
 

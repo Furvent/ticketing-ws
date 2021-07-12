@@ -23,8 +23,13 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(unique = true)
+	private String publicId;
+	
 	@Column(unique = true)
 	private String username;
+	
 	private String password, pseudo;
 	private LocalDateTime creationAccountDate;
 
@@ -37,7 +42,8 @@ public class User {
 	public User() {
 	}
 
-	public User(String username, String password, String pseudo, LocalDateTime creationAccountDate) {
+	public User(String publicId, String username, String password, String pseudo, LocalDateTime creationAccountDate) {
+		this.publicId = publicId;
 		this.username = username;
 		this.password = password;
 		this.pseudo = pseudo;

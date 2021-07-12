@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,10 @@ public class Group {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(unique = true)
+	private String publicId;
+	
 	private String name;
 	private LocalDateTime creationDateGroup;
 
@@ -41,7 +46,8 @@ public class Group {
 	public Group() {
 	}
 
-	public Group(String name, User createdBy, LocalDateTime creationDateGroup) {
+	public Group(String publicId, String name, User createdBy, LocalDateTime creationDateGroup) {
+		this.publicId = publicId;
 		this.name = name;
 		this.createdBy = createdBy;
 		this.creationDateGroup = creationDateGroup;
