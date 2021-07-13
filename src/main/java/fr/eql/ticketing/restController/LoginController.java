@@ -33,19 +33,19 @@ public class LoginController {
 		try {
 			// List of Checks
 			if (newUser.getUsername().isEmpty()) {
-				errorMessageToUser = "Your login is empty";
+				errorMessageToUser = "Username is empty";
 				throw new InvalidNewDataPostException("Can't create new user because login is empty");
 			}
 			if (userService.checkIfUserExistWithThisUsername(newUser.getUsername())) {
-				errorMessageToUser = "Login already used";
+				errorMessageToUser = "Username already used";
 				throw new InvalidNewDataPostException("Can't create new user because login already exists");
 			}
 			if (newUser.getPassword().isEmpty()) {
-				errorMessageToUser = "Your password is empty";
+				errorMessageToUser = "Password is empty";
 				throw new InvalidNewDataPostException("Can't create new user because password is empty");
 			}
 			if (newUser.getPseudo().isEmpty()) {
-				errorMessageToUser = "Your pseudo is empty";
+				errorMessageToUser = "Pseudo is empty";
 				throw new InvalidNewDataPostException("Can't create new user because pseudo is empty");
 			}
 			// If code reaches here, we can save new user
