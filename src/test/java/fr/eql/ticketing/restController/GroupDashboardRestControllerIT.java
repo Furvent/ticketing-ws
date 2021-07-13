@@ -122,6 +122,7 @@ public class GroupDashboardRestControllerIT {
 		String response = restTemplate.postForObject(url, request, String.class);
 		System.out.println(response);
 	
+		// TODO: see https://stackoverflow.com/questions/631598/how-to-use-junit-to-test-asynchronous-processes
 		
 	}
     

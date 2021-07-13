@@ -123,7 +123,7 @@ public class GeneralDashboardRestController {
 			return new ResponseEntity<PrivateUser>(privateUser, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 

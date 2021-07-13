@@ -36,7 +36,7 @@ public class LoginControllerIT {
 	private UserRepository userRepository;
 
 	@BeforeEach
-	void cleanDbBeforeTest() {
+	void cleanDbBeforeEachTest() {
 		userRepository.deleteAll();
 	}
 
