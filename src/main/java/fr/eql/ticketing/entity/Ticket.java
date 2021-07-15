@@ -41,13 +41,13 @@ public class Ticket {
 	public Ticket() {
 	}
 
-	public Ticket(String details, String title) {
+	public Ticket(String title, String details) {
 		this.description = details;
 		this.title = title;
 	}
 
-	public Ticket(String details, String title, Group group) {
-		this(details, title);
+	public Ticket(String title, String details, Group group) {
+		this(title, details);
 		this.group = group;
 	}
 
