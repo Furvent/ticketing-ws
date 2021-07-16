@@ -312,19 +312,19 @@ public class GroupDashboardRestControllerIT {
 		statusHistoryRepository.save(statusHistoryTicket2Allocated);
 
 		String url = "/private/group/add-ticket";
-		
+
 		final String newTicketMockedTitle = "new ticket title";
 		final String newTicketMockedDescription = "new ticket description";
 		final List<PublicUser> publicUsersToAdd = new ArrayList<PublicUser>();
 		publicUsersToAdd.add(new PublicUser(mimi.getId(), mimi.getPseudo()));
 		publicUsersToAdd.add(new PublicUser(boby.getId(), boby.getPseudo()));
-		
+
 		NewTicket newTicket = new NewTicket();
 		newTicket.setTitle(newTicketMockedTitle);
 		newTicket.setDescription(newTicketMockedDescription);
 		newTicket.setGroupId(group1Id);
 		newTicket.setUsersOnTask(publicUsersToAdd);
-		
+
 		HttpEntity<NewTicket> request = new HttpEntity<>(newTicket);
 		ResponseEntity<TicketData> response = restTemplate.postForEntity(url, request, TicketData.class);
 		// Test returned code
@@ -333,13 +333,140 @@ public class GroupDashboardRestControllerIT {
 		assertTrue(response.getBody().getDescription().equals(newTicketMockedDescription));
 		assertTrue(response.getBody().getHistory().size() == 3);
 		response.getBody().getHistory().forEach(activity -> {
-			assertTrue(activity.getLabel().equals(TicketStatus.OPENED) || activity.getLabel().equals(TicketStatus.ALLOCATED));
+			assertTrue(activity.getLabel().equals(TicketStatus.OPENED)
+					|| activity.getLabel().equals(TicketStatus.ALLOCATED));
 		});
-		System.err.println("TicketData = " + response.getBody());
 		assertTrue(response.getBody().getUsersOnTask().size() == 2);
 		response.getBody().getUsersOnTask().forEach(user -> {
 			assertTrue(user.getPseudo().equals(mimi.getPseudo()) || user.getPseudo().equals(boby.getPseudo()));
 		});
+	}
+
+	@Test
+	void itShouldNotAddTicketBecauseMissingTitle() {
+		final String mockedTicketTitle1 = "title_1";
+		final String mockedTicketTitle2 = "title_2";
+		final String mockedTicketDescription1 = "description_1";
+		final String mockedTicketDescription2 = "description_2";
+
+		final String newTicketMockedTitle = "";
+		final String newTicketMockedDescription = "new ticket description";
+		// Create users for a group
+		User mimi = new User("mimi", "123", "mimi92", LocalDateTime.now());
+		userRepository.save(mimi);
+		User boby = new User("boby", "123", "boby12", LocalDateTime.now());
+		userRepository.save(boby);
+		User sarah = new User("sarah", "123", "sarah42", LocalDateTime.now());
+		userRepository.save(sarah);
+
+		// Create a group
+		Group group1 = new Group("Ein Group", mimi, LocalDateTime.now());
+		groupRepository.save(group1);
+		final long group1Id = group1.getId();
+
+		// Add users to group 1
+		// Add memberships
+		membershipRepository.save(new Membership(mimi, group1, LocalDateTime.now()));
+		membershipRepository.save(new Membership(boby, group1, LocalDateTime.now()));
+		membershipRepository.save(new Membership(sarah, group1, LocalDateTime.now()));
+
+		// Create tickets
+		// Get status ref
+		Status statusOpened = statusRepository.findByLabel(TicketStatus.OPENED).get();
+		Status statusAllocated = statusRepository.findByLabel(TicketStatus.ALLOCATED).get();
+
+		Ticket ticket1 = new Ticket(mockedTicketTitle1, mockedTicketDescription1, group1);
+		Ticket ticket2 = new Ticket(mockedTicketTitle2, mockedTicketDescription2, group1);
+		ticketRepository.save(ticket1);
+		ticketRepository.save(ticket2);
+		// Create statusHistory opened and join to ticket
+		StatusHistory statusHistoryTicket1Opened = new StatusHistory(statusOpened, ticket1, LocalDateTime.now());
+		StatusHistory statusHistoryTicket2Opened = new StatusHistory(statusOpened, ticket2, LocalDateTime.now());
+		statusHistoryRepository.save(statusHistoryTicket1Opened);
+		statusHistoryRepository.save(statusHistoryTicket2Opened);
+		// Create Task and statusHistory allocated and joined to ticket 2
+		Task taskBetweenMimiAndTicket2 = new Task(mimi, ticket2, LocalDateTime.now().plusSeconds(1));
+		StatusHistory statusHistoryTicket2Allocated = new StatusHistory(statusAllocated, ticket2,
+				LocalDateTime.now().plusSeconds(1));
+		taskRepository.save(taskBetweenMimiAndTicket2);
+		statusHistoryRepository.save(statusHistoryTicket2Allocated);
+
+		String url = "/private/group/add-ticket";
+		NewTicket newTicket = new NewTicket();
+		newTicket.setTitle(newTicketMockedTitle);
+		newTicket.setDescription(newTicketMockedDescription);
+		newTicket.setGroupId(group1Id);
+		HttpEntity<NewTicket> request = new HttpEntity<>(newTicket);
+		ResponseEntity<TicketData> response = restTemplate.postForEntity(url, request, TicketData.class);
+		// Test returned code
+		assertTrue(response.getStatusCode() == HttpStatus.BAD_REQUEST);
+	}
+	
+	@Test
+	void itShouldNotAddTicketBecauseWrongIdInPublicUser() {
+		final String mockedTicketTitle1 = "title_1";
+		final String mockedTicketTitle2 = "title_2";
+		final String mockedTicketDescription1 = "description_1";
+		final String mockedTicketDescription2 = "description_2";
+
+		// Create users for a group
+		User mimi = new User("mimi", "123", "mimi92", LocalDateTime.now());
+		userRepository.save(mimi);
+		User boby = new User("boby", "123", "boby12", LocalDateTime.now());
+		userRepository.save(boby);
+		User sarah = new User("sarah", "123", "sarah42", LocalDateTime.now());
+		userRepository.save(sarah);
+
+		// Create a group
+		Group group1 = new Group("Ein Group", mimi, LocalDateTime.now());
+		groupRepository.save(group1);
+		final long group1Id = group1.getId();
+
+		// Add users to group 1
+		// Add memberships
+		membershipRepository.save(new Membership(mimi, group1, LocalDateTime.now()));
+		membershipRepository.save(new Membership(boby, group1, LocalDateTime.now()));
+		membershipRepository.save(new Membership(sarah, group1, LocalDateTime.now()));
+
+		// Create tickets
+		// Get status ref
+		Status statusOpened = statusRepository.findByLabel(TicketStatus.OPENED).get();
+		Status statusAllocated = statusRepository.findByLabel(TicketStatus.ALLOCATED).get();
+
+		Ticket ticket1 = new Ticket(mockedTicketTitle1, mockedTicketDescription1, group1);
+		Ticket ticket2 = new Ticket(mockedTicketTitle2, mockedTicketDescription2, group1);
+		ticketRepository.save(ticket1);
+		ticketRepository.save(ticket2);
+		// Create statusHistory opened and join to ticket
+		StatusHistory statusHistoryTicket1Opened = new StatusHistory(statusOpened, ticket1, LocalDateTime.now());
+		StatusHistory statusHistoryTicket2Opened = new StatusHistory(statusOpened, ticket2, LocalDateTime.now());
+		statusHistoryRepository.save(statusHistoryTicket1Opened);
+		statusHistoryRepository.save(statusHistoryTicket2Opened);
+		// Create Task and statusHistory allocated and joined to ticket 2
+		Task taskBetweenMimiAndTicket2 = new Task(mimi, ticket2, LocalDateTime.now().plusSeconds(1));
+		StatusHistory statusHistoryTicket2Allocated = new StatusHistory(statusAllocated, ticket2,
+				LocalDateTime.now().plusSeconds(1));
+		taskRepository.save(taskBetweenMimiAndTicket2);
+		statusHistoryRepository.save(statusHistoryTicket2Allocated);
+
+		String url = "/private/group/add-ticket";
+
+		final String newTicketMockedTitle = "new ticket title";
+		final String newTicketMockedDescription = "new ticket description";
+		final List<PublicUser> publicUsersToAdd = new ArrayList<PublicUser>();
+		publicUsersToAdd.add(new PublicUser(45l, mimi.getPseudo()));
+		publicUsersToAdd.add(new PublicUser(boby.getId(), boby.getPseudo()));
+
+		NewTicket newTicket = new NewTicket();
+		newTicket.setTitle(newTicketMockedTitle);
+		newTicket.setDescription(newTicketMockedDescription);
+		newTicket.setGroupId(group1Id);
+		newTicket.setUsersOnTask(publicUsersToAdd);
+
+		HttpEntity<NewTicket> request = new HttpEntity<>(newTicket);
+		ResponseEntity<TicketData> response = restTemplate.postForEntity(url, request, TicketData.class);
+		// Test returned code
+		assertTrue(response.getStatusCode() == HttpStatus.BAD_REQUEST);
 	}
 
 }
