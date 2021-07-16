@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import fr.eql.ticketing.entity.StatusHistory;
+import fr.eql.ticketing.entity.Ticket;
 import fr.eql.ticketing.repository.StatusHistoryRepository;
 
 @Service
@@ -30,6 +31,11 @@ public class StatusHistoryServiceImpl implements StatusHistoryService {
 	public StatusHistory getStatusHistoryById(Long logId) {
 		Optional<StatusHistory> statusHistory = repository.findById(logId);
 		return statusHistory.isPresent() ? statusHistory.get() : null;
+	}
+
+	@Override
+	public List<StatusHistory> getAllStatusHistoryByTicket(Ticket ticket) {
+		return repository.findByTicket(ticket);
 	}
 
 }

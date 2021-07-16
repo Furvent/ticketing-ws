@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import fr.eql.ticketing.entity.Task;
+import fr.eql.ticketing.entity.Ticket;
 import fr.eql.ticketing.repository.TaskRepository;
 
 @Service
@@ -30,6 +31,11 @@ public class TaskServiceImpl implements TaskService {
 	public Task getTaskById(Long taskId) {
 		Optional<Task> task = repository.findById(taskId);
 		return task.isPresent() ? task.get() : null;
+	}
+
+	@Override
+	public List<Task> getAllTaskByTicket(Ticket ticket) {
+		return repository.findByTicket(ticket);
 	}
 
 }

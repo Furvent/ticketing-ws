@@ -117,7 +117,7 @@ public class GroupDashboardRestController {
 			}
 			Group ticketGroup = groupService.getGroupById(newTicket.getGroupId());
 			// Add ticket and if user is on task, add relation
-			Ticket ticketEntity = new Ticket(newTicket.getDescription(), newTicket.getTitle(), ticketGroup);
+			Ticket ticketEntity = new Ticket(newTicket.getTitle(), newTicket.getDescription(), ticketGroup);
 			// We save ticket to get id
 			ticketService.save(ticketEntity);
 			// If user on task
@@ -135,9 +135,17 @@ public class GroupDashboardRestController {
 			Status statusOpened = statusService.getStatusByLabel(TicketStatus.OPENED);
 			StatusHistory statusHistoryEntity = new StatusHistory(statusOpened, ticketEntity, LocalDateTime.now());
 			statusHistoryService.save(statusHistoryEntity);
-			// TODO: handle problem, in the TicketData send back, there is no history or users on task
-			Ticket ticketEntity2 = ticketService.getTicketById(ticketEntity.getId());
-			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity2);
+			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity);
+			// Must collect history and users "manually" because problem to get it from hibernate when
+			// entity is created
+			ticketData.setHistory(
+					statusHistoryService.getAllStatusHistoryByTicket(ticketEntity).stream().map(activity -> {
+						return new StatusData(activity.getStatus().getLabel(), activity.getStatusDate());
+					}).collect(Collectors.toList()));
+			ticketData.setUsersOnTask(
+					taskService.getAllTaskByTicket(ticketEntity).stream().map(task -> {
+						return new PublicUser(task.getUser().getId(), task.getUser().getPseudo());
+					}).collect(Collectors.toList()));
 			return new ResponseEntity<TicketData>(ticketData, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -277,7 +285,8 @@ public class GroupDashboardRestController {
 			throw new InvalidNewDataPostException("Cannot found users entities to add them on task");
 		}
 		// Users already on task
-		List<User> usersAlreadyOnTask = ticket.getTasks().stream().map(task -> task.getUser()).collect(Collectors.toList());
+		List<User> usersAlreadyOnTask = ticket.getTasks().stream().map(task -> task.getUser())
+				.collect(Collectors.toList());
 		// Create a list with only new users to add on task
 		List<User> usersToAddOnTask = usersOnTaskCollected.stream().filter(userCollected -> {
 			return !usersAlreadyOnTask.contains(userCollected);
@@ -285,14 +294,14 @@ public class GroupDashboardRestController {
 		// For each user to add, add a task and add a new status on the ticket
 		List<Task> tasks = new ArrayList<Task>();
 		List<StatusHistory> history = new ArrayList<StatusHistory>();
+		Status statusAllocated = statusService.getStatusByLabel(TicketStatus.ALLOCATED);
 		usersToAddOnTask.forEach(userOnTask -> {
 			LocalDateTime now = LocalDateTime.now().plusSeconds(1);
 			// Create task
 			Task task = new Task(userOnTask, ticket, now);
 			tasks.add(task);
 			// Create statusHistory
-			Status status = statusService.getStatusByLabel(TicketStatus.ALLOCATED);
-			StatusHistory statusHistory = new StatusHistory(status, ticket, now);
+			StatusHistory statusHistory = new StatusHistory(statusAllocated, ticket, now);
 			history.add(statusHistory);
 		});
 		// Save new entities

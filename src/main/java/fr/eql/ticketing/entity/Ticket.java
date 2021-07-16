@@ -42,8 +42,8 @@ public class Ticket {
 	}
 
 	public Ticket(String title, String details) {
-		this.description = details;
 		this.title = title;
+		this.description = details;
 	}
 
 	public Ticket(String title, String details, Group group) {
