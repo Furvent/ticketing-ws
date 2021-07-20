@@ -18,5 +18,7 @@ public interface UserService {
 	public boolean checkIfUserExistWithThisId(Long id);
 
 	public List<User> getMultipleUsersWithIds(List<Long> ids);
+	
+	public List<User> getAllUsers();
 
 }
