@@ -108,16 +108,22 @@ public class InitDataSet {
 		 * le groupe devGroup; date min LocalDateTime.of(2021, 4, 11, 14, 10));
 		 */
 		// First 3, going until Closed
-		Ticket ticketInfos = new Ticket("Gather information about already existing" + "ticketing apps",
-				"Gather infos about other apps", devGroup);
+		Ticket ticketInfos = new Ticket("Gather infos about other apps",
+		"Gather information about already existing" + "ticketing apps." + 
+		"\n I'm baby vinyl prism consequat consectetur yr, DIY in aesthetic. "
+		+ "Biodiesel lo-fi squid man braid microdosing la croix lumbersexual elit mustache affogato veniam brooklyn lyft"
+		, devGroup);
 		ticketService.save(ticketInfos);
 		addStatusHistory(ticketInfos, statusOpened, LocalDateTime.of(2021, 4, 14, 15, 10));
 		addTaskBetweenUserAndTicket(mimi, ticketInfos, statusAllocated, LocalDateTime.of(2021, 1, 14, 16, 10));
 		addStatusHistory(ticketInfos, statusDone, LocalDateTime.of(2021, 4, 15, 15, 10));
 		addStatusHistory(ticketInfos, statusClosed, LocalDateTime.of(2021, 4, 15, 16, 10));
 
-		Ticket ticketDataModel = new Ticket("Prepare the database model for our " + "ticketing apps",
-				"Prepare the database", devGroup);
+		Ticket ticketDataModel = new Ticket("Prepare the database", 
+		"Prepare the database model for our " + "ticketing apps." +
+		" Authentic dreamcatcher sustainable, XOXO nisi 3 wolf moon hell of hashtag. +1 typewriter PBR&B "
+		+ "voluptate kickstarter sustainable palo santo poutine, craft beer street art woke.",
+		devGroup);
 		ticketService.save(ticketDataModel);
 		addStatusHistory(ticketDataModel, statusOpened, LocalDateTime.of(2021, 4, 14, 15, 15));
 		addTaskBetweenUserAndTicket(matteo, ticketDataModel, statusAllocated, LocalDateTime.of(2021, 5, 15, 16, 10));
@@ -125,7 +131,11 @@ public class InitDataSet {
 		addStatusHistory(ticketDataModel, statusDone, LocalDateTime.of(2021, 05, 17, 15, 10));
 		addStatusHistory(ticketDataModel, statusClosed, LocalDateTime.of(2021, 05, 18, 15, 10));
 
-		Ticket ticketComm = new Ticket("Prepare a discord and drive to share data", "Setup sharing tools", devGroup);
+		Ticket ticketComm = new Ticket("Setup sharing tools", 
+		"Prepare a discord and drive to share data. " +
+		"\n Aliquip consequat minim cold-pressed, tote bag cloud bread pork belly. "
+		+ "Taxidermy glossier williamsburg cred stumptown adaptogen duis cliche viral farm-to-table keytar.", 
+		devGroup);
 		ticketService.save(ticketComm);
 		addStatusHistory(ticketComm, statusOpened, LocalDateTime.of(2021, 04, 14, 15, 20));
 		addTaskBetweenUserAndTicket(matteo, ticketComm, statusAllocated, LocalDateTime.of(2021, 05, 15, 16, 10));
@@ -133,35 +143,57 @@ public class InitDataSet {
 		addStatusHistory(ticketComm, statusClosed, LocalDateTime.of(2021, 05, 18, 15, 10));
 
 		// next two in done
-		Ticket ticketBack = new Ticket("Program and implement the back-end", "Code the back", devGroup);
+		Ticket ticketBack = new Ticket("Code the back", 
+		"Program and implement the back-end" + 
+		"\n Dolor meggings edison bulb, schlitz knausgaard occaecat laboris tbh messenger bag marfa. "
+		+ "Sed meggings culpa listicle. Chillwave master cleanse mlkshk adaptogen typewriter fam.", 
+		devGroup);
 		ticketService.save(ticketBack);
 		addStatusHistory(ticketBack, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		addTaskBetweenUserAndTicket(matteo, ticketBack, statusAllocated, LocalDateTime.of(2021, 05, 14, 19, 25));
 		addStatusHistory(ticketBack, statusDone, LocalDateTime.of(2021, 05, 17, 15, 10));
 
-		Ticket ticketDemo = new Ticket("Prepare a scenario to be used in a demo", "Prepare a demo", devGroup);
+		Ticket ticketDemo = new Ticket("Prepare a demo", 
+		"Prepare a scenario to be used in a demo." +
+		"\n Eiusmod normcore irony af, eu sed lumbersexual 3 wolf moon. Locavore aliqua banjo, snackwave anim 3 wolf moon air plant.",
+		devGroup);
 		ticketService.save(ticketDemo);
 		addStatusHistory(ticketDemo, statusAllocated, LocalDateTime.of(2021, 05, 16, 15, 10));
 		addTaskBetweenUserAndTicket(myriam, ticketDemo, statusAllocated, LocalDateTime.of(2021, 05, 16, 18, 10));
 		addStatusHistory(ticketDemo, statusDone, LocalDateTime.of(2021, 05, 19, 15, 10));
 
 		// next two in Allocated
-		Ticket ticketFront = new Ticket("Program and implement the front-end", "Code the front", devGroup);
+		Ticket ticketFront = new Ticket("Code the front",
+		"Program and implement the front-end." +
+		"\n Hashtag ennui ugh drinking vinegar wolf raw denim dolor freegan enim next level XOXO blog tumeric. "
+		+ "VHS enim cray health goth tilde. Fugiat activated charcoal enim nulla butcher bicycle rights, taiyaki fixie distillery",
+		devGroup);
 		ticketService.save(ticketFront);
 		addStatusHistory(ticketFront, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		addTaskBetweenUserAndTicket(mimi, ticketFront, statusAllocated, LocalDateTime.of(2021, 05, 18, 19, 25));
 
-		Ticket ticketHost = new Ticket("Find an hosting service", "Find a hosting service", devGroup);
+		Ticket ticketHost = new Ticket("Find a hosting service", 
+		"Find an hosting service." + 
+		"\n Quinoa dolore ethical sartorial +1. Cloud bread four dollar toast stumptown commodo migas seitan. "
+		+ "Skateboard biodiesel scenester, lyft tilde ut chicharrones consequat kogi velit prism. Man braid 8-bit excepteur salvia."
+		,devGroup);
 		ticketService.save(ticketHost);
 		addStatusHistory(ticketHost, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 		addTaskBetweenUserAndTicket(myriam, ticketHost, statusAllocated, LocalDateTime.of(2021, 05, 16, 19, 25));
 
 		// next two in Opened
-		Ticket ticketPopulate = new Ticket("Populate the database", "Populate the database", devGroup);
+		Ticket ticketPopulate = new Ticket( "Populate the database", 
+		"Populate the database." + 
+		"\n Skateboard occaecat farm-to-table sriracha, deep v fam austin ramps tumeric cliche migas. "
+		+ "Scenester forage everyday carry taxidermy taiyaki pitchfork helvetica ullamco ea nostrud."
+		, 	devGroup);
 		ticketService.save(ticketPopulate);
 		addStatusHistory(ticketPopulate, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 
-		Ticket ticketCloud = new Ticket("Push the app in the clouds", "PrepareCloud", devGroup);
+		Ticket ticketCloud = new Ticket("PrepareCloud", 
+		"Push the app in the clouds." + 
+		"\n Kale chips fashion axe af air plant anim sartorial succulents ut pop-up helvetica synth vaporware. "
+		+ "Sustainable tacos aute jianbing, narwhal bicycle rights pour-over adipisicing. ", devGroup);
 		ticketService.save(ticketCloud);
 		addStatusHistory(ticketCloud, statusOpened, LocalDateTime.of(2021, 05, 14, 15, 25));
 
