@@ -300,7 +300,7 @@ public class GroupDashboardRestController {
 	}
 
 	private List<CommentToDisplay> setUpAndGetCommentsToDisplay(CommentsToGet commentsToGet) {
-		String urlWSComment = "http://localhost:8083/api/public/comments";
+		String urlWSComment = "http://15.188.239.98:8083/api/public/comments";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<CommentsToGet> request = new HttpEntity<>(commentsToGet);
 		CommentToDisplay[] preResult = restTemplate.postForObject(urlWSComment, request, CommentToDisplay[].class);
