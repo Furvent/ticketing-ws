@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import fr.eql.ticketing.entity.Group;
-import fr.eql.ticketing.entity.Membership;
 import fr.eql.ticketing.entity.Status;
 import fr.eql.ticketing.entity.StatusHistory;
 import fr.eql.ticketing.entity.Task;
@@ -27,7 +26,6 @@ import fr.eql.ticketing.enums.EntityType;
 import fr.eql.ticketing.enums.TicketStatus;
 import fr.eql.ticketing.exception.restController.InvalidNewDataPostException;
 import fr.eql.ticketing.restController.dto.create.NewTicket;
-import fr.eql.ticketing.restController.dto.create.UserIdGroupIdForm;
 import fr.eql.ticketing.restController.dto.read.CommentToDisplay;
 import fr.eql.ticketing.restController.dto.read.CommentsToGet;
 import fr.eql.ticketing.restController.dto.read.GroupDashboardData;
@@ -190,33 +188,6 @@ public class GroupDashboardRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	@PostMapping("/add-user")
-	public ResponseEntity<?> addUserToGroup(@RequestBody UserIdGroupIdForm userIdGroupIdForm) {
-		try {
-			// Check if group exist
-			Group groupEntity = groupService.getGroupById(userIdGroupIdForm.getGroupId());
-			if (groupEntity == null) {
-				throw new InvalidNewDataPostException(
-						"Group with id -" + userIdGroupIdForm.getGroupId() + "- doesn't exist.");
-			}
-			// Check if user exist
-			User userEntity = userService.getUserWithId(userIdGroupIdForm.getUserId());
-			if (userEntity == null) {
-				throw new InvalidNewDataPostException(
-						"User with id -" + userIdGroupIdForm.getUserId() + "- doesn't exist.");
-			}
-			// TODO: Check if user was a member but withdrawn from group
-			// Create membership
-			Membership newMembership = new Membership(userEntity, groupEntity, LocalDateTime.now());
-			membershipService.save(newMembership);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
 //	@PostMapping("/remove-user")
 //	public ResponseEntity<?> removeUserFromGroup(@RequestBody UserIdGroupIdForm userIdGroupIdForm) {
 //		try {
