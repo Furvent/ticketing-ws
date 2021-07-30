@@ -19,7 +19,7 @@ import fr.eql.ticketing.restController.dto.create.NewComment;
 @RequestMapping(value = "/comment", headers = "Accept=application/json")
 public class CommentRestController {
 
-	private static String urlWSComment = "http://localhost:8083/api/";
+	private static String urlWSComment = "http://15.188.239.98:8083/api/";
 
 	@PostMapping("/createTicket")
 	public ResponseEntity<?> createTicketComment(@RequestBody NewComment newComment) {
