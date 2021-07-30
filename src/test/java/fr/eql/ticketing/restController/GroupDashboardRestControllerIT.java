@@ -1,6 +1,6 @@
 package fr.eql.ticketing.restController;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.security.cert.CollectionCertStoreParameters;
 import java.time.LocalDateTime;
