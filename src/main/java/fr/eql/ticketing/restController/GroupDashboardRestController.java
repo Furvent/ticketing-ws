@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +68,10 @@ public class GroupDashboardRestController {
 		this.statusService = statusService;
 	}
 
+	@Autowired
+	private Environment env;
+	
+	
 	@PostMapping("")
 	public ResponseEntity<?> getGroupDashboardData(@RequestBody long groupId) {
 		try {
@@ -300,7 +306,7 @@ public class GroupDashboardRestController {
 	}
 
 	private List<CommentToDisplay> setUpAndGetCommentsToDisplay(CommentsToGet commentsToGet) {
-		String urlWSComment = "http://15.188.239.98:8083/api/public/comments";
+		String urlWSComment = env.getProperty("service.url") + "public/comments";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<CommentsToGet> request = new HttpEntity<>(commentsToGet);
 		CommentToDisplay[] preResult = restTemplate.postForObject(urlWSComment, request, CommentToDisplay[].class);
