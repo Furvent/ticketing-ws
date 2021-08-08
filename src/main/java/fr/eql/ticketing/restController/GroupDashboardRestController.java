@@ -45,6 +45,7 @@ import fr.eql.ticketing.service.UserService;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/private/group", headers = "Accept=application/json")
+@Deprecated
 public class GroupDashboardRestController {
 	UserService userService;
 	GroupService groupService;
@@ -125,7 +126,7 @@ public class GroupDashboardRestController {
 					this.addTaskAndHistoryOnTicketWithPublicUsers(ticketEntity, newTicket.getUsersOnTask());
 				} catch (Exception e) {
 					// Remove the ticket because bad data sent
-					ticketService.delete(ticketEntity);
+//					ticketService.delete(ticketEntity);
 					throw e;
 				}
 			}

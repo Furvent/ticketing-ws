@@ -26,6 +26,7 @@ import fr.eql.ticketing.service.UserService;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/private/user-group", headers = "Accept=application/json")
+@Deprecated
 public class UserGroupRestController {
 	UserService userService;
 	GroupService groupService;

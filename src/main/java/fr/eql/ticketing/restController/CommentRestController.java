@@ -17,6 +17,7 @@ import fr.eql.ticketing.restController.dto.create.NewComment;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/comment", headers = "Accept=application/json")
+@Deprecated
 public class CommentRestController {
 
 	private static String urlWSComment = "http://localhost:8083/api/";

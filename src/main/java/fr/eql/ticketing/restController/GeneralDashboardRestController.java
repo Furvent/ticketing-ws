@@ -32,6 +32,7 @@ import fr.eql.ticketing.service.UserService;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/private/dashboard", headers = "Accept=application/json")
+@Deprecated
 public class GeneralDashboardRestController {
 	private GroupService groupService;
 	private UserService userService;
