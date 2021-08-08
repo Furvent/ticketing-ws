@@ -42,7 +42,6 @@ import fr.eql.ticketing.service.TaskService;
 import fr.eql.ticketing.service.TicketService;
 import fr.eql.ticketing.service.UserService;
 
-@RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/private/group", headers = "Accept=application/json")
 @Deprecated

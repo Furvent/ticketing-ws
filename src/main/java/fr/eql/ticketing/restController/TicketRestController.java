@@ -49,7 +49,7 @@ public class TicketRestController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getTicketById(@PathVariable String id) {
+	public ResponseEntity<?> getTicket(@PathVariable String id) {
 		try {
 			Ticket ticketEntity = this.ticketService.getTicketById(Long.parseLong(id));
 			if (ticketEntity == null) {

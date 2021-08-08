@@ -17,7 +17,6 @@ import fr.eql.ticketing.restController.dto.create.NewUser;
 import fr.eql.ticketing.restController.dto.read.PrivateUser;
 import fr.eql.ticketing.service.UserService;
 
-@RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/public/login", headers = "Accept=application/json")
 @Deprecated
