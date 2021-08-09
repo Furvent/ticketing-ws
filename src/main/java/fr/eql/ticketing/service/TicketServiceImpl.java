@@ -71,7 +71,7 @@ public class TicketServiceImpl implements TicketService {
 		Ticket ticketEntity = this.getTicketById(updatedTicket.getTicketId());
 		if (ticketEntity == null) {
 			throw new InvalidNewDataPostException(
-					"Ticket with id -" + updatedTicket.getTicketId() + "- doesn't exist.");
+					"Ticket with id - " + updatedTicket.getTicketId() + " - doesn't exist.");
 		}
 		if (updatedTicket.getUsersOnTask().size() > 0) {
 			this.addTaskAndHistoryOnTicketWithPublicUsers(ticketEntity, updatedTicket.getUsersOnTask());

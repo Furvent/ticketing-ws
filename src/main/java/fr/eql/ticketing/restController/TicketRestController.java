@@ -53,7 +53,7 @@ public class TicketRestController {
 		try {
 			Ticket ticketEntity = this.ticketService.getTicketById(Long.parseLong(id));
 			if (ticketEntity == null) {
-				throw new InvalidNewDataPostException("Ticket with id -" + id + "- doesn't exist.");
+				throw new InvalidNewDataPostException("Ticket with id - " + id + " - does not exist.");
 			}
 			TicketData ticketData = this.createTicketDataFromTicketEntity(ticketEntity);
 			return new ResponseEntity<TicketData>(ticketData, HttpStatus.OK);
@@ -77,7 +77,7 @@ public class TicketRestController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
